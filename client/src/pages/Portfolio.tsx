@@ -45,31 +45,23 @@ export default function Portfolio() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/">
-              <a className="text-2xl font-bold text-foreground tracking-tight">
-                FrameTell
-              </a>
+            <Link href="/" className="text-2xl font-bold text-foreground tracking-tight">
+              FrameTell
             </Link>
             <div className="hidden md:flex items-center gap-8">
-              <Link href="/services">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Services
-                </a>
-              </Link>
-              <Link href="/portfolio">
-                <a className="text-sm text-foreground font-medium">Portfolio</a>
-              </Link>
-              <Link href="/about">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  About
-                </a>
-              </Link>
+              <Link href="/services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Services
+            </Link>
+              <Link href="/portfolio" className="text-sm text-foreground font-medium">
+              Portfolio
+            </Link>
+              <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              About
+            </Link>
               <Link href="/contact">
-                <a>
-                  <Button variant="default" size="sm">
+                <Button variant="default" size="sm">
                     Get in Touch
                   </Button>
-                </a>
               </Link>
             </div>
           </div>
@@ -181,19 +173,15 @@ export default function Portfolio() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
-              <a>
                 <Button size="lg" variant="default">
                   Start Your Project
                 </Button>
-              </a>
-            </Link>
+              </Link>
             <Link href="/services">
-              <a>
                 <Button size="lg" variant="outline">
                   View Services
                 </Button>
-              </a>
-            </Link>
+              </Link>
           </div>
         </div>
       </section>
@@ -219,26 +207,18 @@ export default function Portfolio() {
               </p>
             </div>
             <div className="flex gap-8">
-              <Link href="/services">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Services
-                </a>
-              </Link>
-              <Link href="/portfolio">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Portfolio
-                </a>
-              </Link>
-              <Link href="/about">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  About
-                </a>
-              </Link>
-              <Link href="/contact">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
-                </a>
-              </Link>
+              <Link href="/services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Services
+            </Link>
+              <Link href="/portfolio" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Portfolio
+            </Link>
+              <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              About
+            </Link>
+              <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Contact
+            </Link>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-border text-center">

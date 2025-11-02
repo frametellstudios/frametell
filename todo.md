@@ -44,3 +44,6 @@
 - [ ] Testimonials section
 - [ ] Service pricing calculator
 - [ ] Booking/inquiry system
+
+## Bug Fixes
+- [x] Fix nested anchor tags in navigation across all pages
