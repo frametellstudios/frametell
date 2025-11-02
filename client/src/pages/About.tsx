@@ -284,26 +284,22 @@ export default function About() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
-              <a>
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  className="bg-background text-foreground hover:bg-background/90"
-                >
-                  Get Started
-                </Button>
-              </a>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="bg-background text-foreground hover:bg-background/90"
+              >
+                Get Started
+              </Button>
             </Link>
             <Link href="/portfolio">
-              <a>
-                <Button
+              <Button
                   size="lg"
                   variant="outline"
                   className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10"
                 >
                   View Portfolio
                 </Button>
-              </a>
             </Link>
           </div>
         </div>
