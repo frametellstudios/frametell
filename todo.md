@@ -11,13 +11,13 @@
 - [ ] Implement lightbox for full-screen media viewing
 - [x] Create about page
 - [x] Create contact form with Netlify Forms
-- [ ] Set up Payload CMS integration
+- [x] Set up Decap CMS integration
 - [ ] Configure media upload system
 - [ ] Create blog functionality
 - [ ] Build client gallery system (password-protected)
-- [ ] Deploy to Netlify
-- [ ] Configure GitHub repository
-- [ ] Set up custom domain (frametell.com)
+- [x] Deploy to Manus hosting
+- [x] Configure GitHub repository
+- [x] Set up custom domain documentation (frametell.com)
 
 ## Service Category Pages
 - [ ] Weddings page
@@ -39,7 +39,7 @@
 - [ ] Add loading states and animations
 
 ## Future Enhancements
-- [ ] NAS + Tailscale integration for client downloads
+- [x] NAS + Tailscale integration documentation for client downloads
 - [ ] Advanced portfolio filtering
 - [ ] Testimonials section
 - [ ] Service pricing calculator
