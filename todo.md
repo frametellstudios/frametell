@@ -76,3 +76,10 @@
 - [x] Implement horizontal swipe for service cards (Videography, Photography, Post-Production)
 - [x] Add horizontal swipe for portfolio category filters
 - [x] Test mobile navigation and swipe gestures
+
+## Branch Setup & Deployment
+- [ ] Merge development changes to staging branch
+- [ ] Merge staging changes to master branch
+- [ ] Push all branches to GitHub
+- [ ] Create Cloudflare pause/maintenance mode guide
+- [ ] Test preview URLs for all branches
