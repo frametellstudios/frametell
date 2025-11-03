@@ -104,3 +104,8 @@
 - [x] Add horizontal scroll for service cards on mobile (Services page)
 - [x] Make specialized services grid more compact and mobile-friendly
 - [x] Add visual indicator for horizontal scroll (peek next card)
+
+## Mobile Menu Z-Index Fix
+- [x] Increase z-index for mobile menu backdrop to appear above all content
+- [x] Increase z-index for mobile menu panel to appear above backdrop
+- [x] Test mobile menu on all pages to ensure it displays correctly

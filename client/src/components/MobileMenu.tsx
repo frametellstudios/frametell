@@ -22,7 +22,7 @@ export function MobileMenu() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] md:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={closeMenu}
@@ -30,7 +30,7 @@ export function MobileMenu() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-background border-l border-border shadow-2xl z-[110] transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-64 bg-background border-l border-border shadow-2xl z-[9999] transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
