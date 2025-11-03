@@ -47,3 +47,14 @@
 
 ## Bug Fixes
 - [x] Fix nested anchor tags in navigation across all pages
+
+## Cloudflare Deployment Issues
+- [ ] Fix build output directory path for Cloudflare Pages
+- [ ] Update deployment documentation with correct configuration
+
+## Analytics & Tracking
+- [x] Research and implement modern analytics solution
+- [x] Set up UTM parameter tracking for social media campaigns
+- [x] Configure event tracking for conversions (contact form, portfolio views)
+- [ ] Add Umami website ID to index.html after account creation
+- [x] Create social media tracking guide with UTM templates

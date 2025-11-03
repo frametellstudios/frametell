@@ -2,12 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Play, Image as ImageIcon } from "lucide-react";
 import { Link } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { trackPortfolioView } from "@/lib/analytics";
 
 type Category = "all" | "weddings" | "events" | "real-estate" | "brand" | "love-stories" | "model";
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState<Category>("all");
+
+  // Track portfolio category views
+  useEffect(() => {
+    if (activeCategory !== "all") {
+      trackPortfolioView(activeCategory);
+    }
+  }, [activeCategory]);
 
   // Placeholder portfolio items
   const portfolioItems = [

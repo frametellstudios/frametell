@@ -7,6 +7,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
+import { trackContactFormSubmit, trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,13 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Track form submission with service type
+    trackContactFormSubmit({
+      service: formData.service || "general",
+      source: "contact_page",
+    });
+    
     // For now, just show a success message
     // In production, this would integrate with a backend or Netlify Forms
     toast.success("Thank you! We'll get back to you soon.");
@@ -173,9 +181,13 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <a 
+                        href="mailto:info@frametell.com"
+                        onClick={() => trackEmailClick()}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      >
                         info@frametell.com
-                      </p>
+                      </a>
                     </div>
                   </div>
 
@@ -185,9 +197,13 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">Phone</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <a 
+                        href="tel:+15551234567"
+                        onClick={() => trackPhoneClick()}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      >
                         +1 (555) 123-4567
-                      </p>
+                      </a>
                     </div>
                   </div>
 
