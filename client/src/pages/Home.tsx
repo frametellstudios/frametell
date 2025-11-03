@@ -88,8 +88,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Videography */}
-            <Link href="/services/videography">
-              <a className="block group">
+            <Link href="/services/videography" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                   <CardContent className="p-8">
                     <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
@@ -110,12 +109,10 @@ export default function Home() {
                     </ul>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
 
             {/* Photography */}
-            <Link href="/services/photography">
-              <a className="block group">
+            <Link href="/services/photography" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                   <CardContent className="p-8">
                     <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
@@ -136,12 +133,10 @@ export default function Home() {
                     </ul>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
 
             {/* Post-Production */}
-            <Link href="/services/post-production">
-              <a className="block group">
+            <Link href="/services/post-production" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                   <CardContent className="p-8">
                     <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
@@ -162,7 +157,6 @@ export default function Home() {
                     </ul>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
           </div>
         </div>

@@ -61,3 +61,6 @@
 
 ## Umami Analytics Configuration
 - [x] Update index.html with actual Umami Website ID
+
+## Bug Fixes - Nested Anchors
+- [x] Fix nested anchor tags on Home page (line 91-92)
