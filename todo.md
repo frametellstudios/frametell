@@ -90,3 +90,6 @@
 ## Bug Fixes - UI Issues
 - [x] Fix mobile menu content not displaying properly
 - [x] Make service cards equal height on desktop
+
+## Bug Fixes - Services Page
+- [x] Fix nested anchor tags in Services.tsx (line 53-54)

@@ -50,8 +50,7 @@ export default function Services() {
       <section className="py-20 px-6 bg-secondary/30">
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            <Link href="/services/videography">
-              <a className="block group">
+            <Link href="/services/videography" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                   <CardContent className="p-8">
                     <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
@@ -66,11 +65,9 @@ export default function Services() {
                     </p>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
 
-            <Link href="/services/photography">
-              <a className="block group">
+            <Link href="/services/photography" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                   <CardContent className="p-8">
                     <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
@@ -85,11 +82,9 @@ export default function Services() {
                     </p>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
 
-            <Link href="/services/post-production">
-              <a className="block group">
+            <Link href="/services/post-production" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                   <CardContent className="p-8">
                     <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
@@ -104,7 +99,6 @@ export default function Services() {
                     </p>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
           </div>
 
