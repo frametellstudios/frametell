@@ -83,3 +83,6 @@
 - [ ] Push all branches to GitHub
 - [ ] Create Cloudflare pause/maintenance mode guide
 - [ ] Test preview URLs for all branches
+
+## Bug Fixes - JSX Errors
+- [x] Fix non-boolean attribute error in Portfolio.tsx style jsx tag
