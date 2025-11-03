@@ -64,3 +64,15 @@
 
 ## Bug Fixes - Nested Anchors
 - [x] Fix nested anchor tags on Home page (line 91-92)
+
+## Development Workflow Setup
+- [x] Create development branch for testing
+- [x] Create staging branch for pre-production
+- [ ] Configure Cloudflare Pages deployment settings
+- [x] Create maintenance page template
+
+## Mobile Improvements
+- [x] Add hamburger menu for mobile navigation (Services, Portfolio, About, Get in Touch)
+- [x] Implement horizontal swipe for service cards (Videography, Photography, Post-Production)
+- [x] Add horizontal swipe for portfolio category filters
+- [x] Test mobile navigation and swipe gestures

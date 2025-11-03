@@ -4,6 +4,7 @@ import { Play, Image as ImageIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
 import { trackPortfolioView } from "@/lib/analytics";
+import { MobileMenu } from "@/components/MobileMenu";
 
 type Category = "all" | "weddings" | "events" | "real-estate" | "brand" | "love-stories" | "model";
 
@@ -72,6 +73,7 @@ export default function Portfolio() {
                   </Button>
               </Link>
             </div>
+            <MobileMenu />
           </div>
         </div>
       </nav>
@@ -92,7 +94,8 @@ export default function Portfolio() {
       {/* Filter Section */}
       <section className="pb-12 px-6">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-wrap justify-center gap-3">
+          {/* Desktop: Flex Wrap */}
+          <div className="hidden md:flex flex-wrap justify-center gap-3">
             {categories.map((category) => (
               <Button
                 key={category.value}
@@ -104,6 +107,31 @@ export default function Portfolio() {
               </Button>
             ))}
           </div>
+
+          {/* Mobile: Horizontal Scroll */}
+          <div className="md:hidden overflow-x-auto scrollbar-hide -mx-6 px-6">
+            <div className="flex gap-3 pb-4">
+              {categories.map((category) => (
+                <Button
+                  key={category.value}
+                  variant={activeCategory === category.value ? "default" : "outline"}
+                  onClick={() => setActiveCategory(category.value)}
+                  className="min-w-[120px] flex-shrink-0"
+                >
+                  {category.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <style jsx>{`
+            .scrollbar-hide::-webkit-scrollbar {
+              display: none;
+            }
+            .scrollbar-hide {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
         </div>
       </section>
 

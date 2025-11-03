@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Camera, Film, Scissors, Play } from "lucide-react";
 import { Link } from "wouter";
+import { MobileMenu } from "@/components/MobileMenu";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
                   </Button>
               </Link>
             </div>
+            <MobileMenu />
           </div>
         </div>
       </nav>
@@ -86,7 +88,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Videography */}
             <Link href="/services/videography" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
@@ -159,6 +162,92 @@ export default function Home() {
                 </Card>
             </Link>
           </div>
+
+          {/* Mobile Horizontal Scroll */}
+          <div className="md:hidden overflow-x-auto scrollbar-hide -mx-6 px-6">
+            <div className="flex gap-6 pb-4">
+              {/* Videography */}
+              <Link href="/services/videography" className="block group flex-shrink-0 w-[85vw]">
+                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
+                  <CardContent className="p-8">
+                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
+                      <Film className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-4">
+                      Videography
+                    </h3>
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      Cinematic wedding films, love stories, business events, and
+                      live streaming that capture every meaningful moment.
+                    </p>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Weddings & Love Stories</li>
+                      <li>• Business Events</li>
+                      <li>• Live Event Coverage</li>
+                      <li>• Brand Stories</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </Link>
+
+              {/* Photography */}
+              <Link href="/services/photography" className="block group flex-shrink-0 w-[85vw]">
+                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
+                  <CardContent className="p-8">
+                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
+                      <Camera className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-4">
+                      Photography
+                    </h3>
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      Professional photography for reportage, real estate, events,
+                      and model portfolios with drone capabilities.
+                    </p>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Reportage Photography</li>
+                      <li>• Real Estate</li>
+                      <li>• Event Coverage</li>
+                      <li>• Model Portfolios</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </Link>
+
+              {/* Post-Production */}
+              <Link href="/services/post-production" className="block group flex-shrink-0 w-[85vw]">
+                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
+                  <CardContent className="p-8">
+                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
+                      <Scissors className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-4">
+                      Post-Production
+                    </h3>
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      Expert editing, color grading, and finishing services to
+                      transform raw footage into polished masterpieces.
+                    </p>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Video Editing</li>
+                      <li>• Color Grading</li>
+                      <li>• Audio Mixing</li>
+                      <li>• Motion Graphics</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </Link>
+            </div>
+          </div>
+          <style jsx>{`
+            .scrollbar-hide::-webkit-scrollbar {
+              display: none;
+            }
+            .scrollbar-hide {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
         </div>
       </section>
 
