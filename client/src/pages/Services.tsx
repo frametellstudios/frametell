@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Camera, Film, Heart, Building, Users, Scissors, Radio, Sparkles } from "lucide-react";
 import { Link } from "wouter";
+import { MobileMenu } from "@/components/MobileMenu";
 
 export default function Services() {
   return (
@@ -29,17 +30,18 @@ export default function Services() {
                   </Button>
               </Link>
             </div>
+            <MobileMenu />
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-16 md:pb-20 px-6">
         <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
             Our Services
           </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
             Comprehensive visual storytelling solutions tailored to your needs.
             From intimate moments to grand events, we bring your vision to life.
           </p>
@@ -47,9 +49,10 @@ export default function Services() {
       </section>
 
       {/* Main Service Categories */}
-      <section className="py-20 px-6 bg-secondary/30">
+      <section className="py-12 md:py-20 px-6 bg-secondary/30">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8 mb-20">
             <Link href="/services/videography" className="block group">
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                   <CardContent className="p-8">
@@ -102,17 +105,78 @@ export default function Services() {
             </Link>
           </div>
 
+          {/* Mobile Horizontal Scroll */}
+          <div className="md:hidden mb-16 relative">
+            <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory px-6 -mx-6">
+              <Link href="/services/videography" className="flex-none w-[85%] snap-center">
+                <Card className="h-full border-2 active:border-primary transition-all">
+                  <CardContent className="p-6">
+                    <div className="mb-4 inline-flex p-3 bg-primary/10 rounded-lg">
+                      <Film className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-3">
+                      Videography
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Cinematic storytelling through motion. Capture weddings, events,
+                      and brand narratives.
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+
+              <Link href="/services/photography" className="flex-none w-[85%] snap-center">
+                <Card className="h-full border-2 active:border-primary transition-all">
+                  <CardContent className="p-6">
+                    <div className="mb-4 inline-flex p-3 bg-primary/10 rounded-lg">
+                      <Camera className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-3">
+                      Photography
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Freeze moments in time. Professional photography for events,
+                      real estate, and portfolios.
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+
+              <Link href="/services/post-production" className="flex-none w-[85%] snap-center">
+                <Card className="h-full border-2 active:border-primary transition-all">
+                  <CardContent className="p-6">
+                    <div className="mb-4 inline-flex p-3 bg-primary/10 rounded-lg">
+                      <Scissors className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-3">
+                      Post-Production
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Transform raw footage into polished content with expert editing
+                      and color grading.
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            </div>
+            {/* Scroll indicator */}
+            <div className="text-center mt-2">
+              <p className="text-xs text-muted-foreground">← Swipe to explore →</p>
+            </div>
+          </div>
+
           {/* Specialized Services */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4">
               Specialized Services
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
               Explore our range of specialized offerings for every occasion
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <Heart className="h-8 w-8 text-primary mb-4" />
@@ -193,16 +257,99 @@ export default function Services() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Mobile Compact Grid (2 columns) */}
+          <div className="md:hidden grid grid-cols-2 gap-3">
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Heart className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Weddings</h4>
+                <p className="text-xs text-muted-foreground">
+                  Cinematic elegance
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Users className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Events</h4>
+                <p className="text-xs text-muted-foreground">
+                  Corporate & social
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Radio className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Live Streaming</h4>
+                <p className="text-xs text-muted-foreground">
+                  Worldwide broadcast
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Heart className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Love Stories</h4>
+                <p className="text-xs text-muted-foreground">
+                  Romantic narratives
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Sparkles className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Brand Stories</h4>
+                <p className="text-xs text-muted-foreground">
+                  Business content
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Building className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Real Estate</h4>
+                <p className="text-xs text-muted-foreground">
+                  Property showcase
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Camera className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Model Portfolio</h4>
+                <p className="text-xs text-muted-foreground">
+                  Professional photos
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Film className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Drone Services</h4>
+                <p className="text-xs text-muted-foreground">
+                  Aerial perspectives
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6">
+      <section className="py-16 md:py-20 px-6">
         <div className="container mx-auto text-center max-w-4xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6">
             Let's Create Together
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-lg md:text-xl text-muted-foreground mb-6 md:mb-8">
             Ready to bring your vision to life? Contact us to discuss your project
             and get a custom quote.
           </p>

@@ -93,3 +93,14 @@
 
 ## Bug Fixes - Services Page
 - [x] Fix nested anchor tags in Services.tsx (line 53-54)
+
+## Mobile UX Improvements - Phase 2
+- [x] Fix mobile menu overlay - add dark backdrop animation
+- [x] Implement dual-category portfolio filters (Project Type + Service Type)
+- [x] Make portfolio filters dropdown/collapsible on mobile
+- [x] Swap button colors on homepage (View Our Work / Start Your Project)
+- [x] Make homepage CTA buttons equal size
+- [x] Enhance showreel placeholder to look like video player
+- [x] Add horizontal scroll for service cards on mobile (Services page)
+- [x] Make specialized services grid more compact and mobile-friendly
+- [x] Add visual indicator for horizontal scroll (peek next card)

@@ -52,14 +52,14 @@ export default function Home() {
               that capture your moments and elevate your brand.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-              <Link href="/portfolio">
-                <Button variant="default" size="lg" className="gap-2">
+              <Link href="/portfolio" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="gap-2 w-full sm:w-[220px]">
                   <Play className="h-5 w-5" />
                   View Our Work
                 </Button>
               </Link>
-              <Link href="/contact">
-                <Button variant="outline" size="lg">
+              <Link href="/contact" className="w-full sm:w-auto">
+                <Button variant="default" size="lg" className="w-full sm:w-[220px]">
                   Start Your Project
                 </Button>
               </Link>
@@ -67,10 +67,29 @@ export default function Home() {
           </div>
 
           {/* Hero Video Placeholder */}
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-muted aspect-video flex items-center justify-center">
-            <div className="text-center">
-              <Play className="h-20 w-20 text-primary mx-auto mb-4" />
-              <p className="text-lg text-muted-foreground">Showreel Coming Soon</p>
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 aspect-video flex items-center justify-center group cursor-pointer">
+            {/* Video player overlay */}
+            <div className="absolute inset-0 bg-black/20" />
+            
+            {/* Play button */}
+            <div className="relative z-10 flex flex-col items-center justify-center">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary/90 hover:bg-primary flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-2xl">
+                <Play className="h-10 w-10 md:h-12 md:w-12 text-white ml-1" fill="white" />
+              </div>
+              <p className="text-white text-lg md:text-xl font-semibold mt-6 drop-shadow-lg">Watch Our Showreel</p>
+              <p className="text-white/70 text-sm mt-2">Coming Soon</p>
+            </div>
+            
+            {/* Video player controls bar */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 md:p-6">
+              <div className="flex items-center gap-4">
+                {/* Progress bar */}
+                <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+                  <div className="h-full w-0 bg-primary rounded-full" />
+                </div>
+                {/* Time display */}
+                <span className="text-white/80 text-xs md:text-sm font-mono">0:00 / 2:30</span>
+              </div>
             </div>
           </div>
         </div>

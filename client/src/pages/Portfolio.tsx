@@ -1,52 +1,67 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Play, Image as ImageIcon } from "lucide-react";
+import { Play, Image as ImageIcon, ChevronDown } from "lucide-react";
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
 import { trackPortfolioView } from "@/lib/analytics";
 import { MobileMenu } from "@/components/MobileMenu";
 
-type Category = "all" | "weddings" | "events" | "real-estate" | "brand" | "love-stories" | "model";
+type ProjectType = "all" | "weddings" | "events" | "real-estate" | "brand" | "love-stories" | "model";
+type ServiceType = "all" | "videography" | "photography";
 
 export default function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState<Category>("all");
+  const [activeProjectType, setActiveProjectType] = useState<ProjectType>("all");
+  const [activeServiceType, setActiveServiceType] = useState<ServiceType>("all");
+  const [showProjectDropdown, setShowProjectDropdown] = useState(false);
+  const [showServiceDropdown, setShowServiceDropdown] = useState(false);
 
   // Track portfolio category views
   useEffect(() => {
-    if (activeCategory !== "all") {
-      trackPortfolioView(activeCategory);
+    if (activeProjectType !== "all" || activeServiceType !== "all") {
+      trackPortfolioView(`${activeProjectType}-${activeServiceType}`);
     }
-  }, [activeCategory]);
+  }, [activeProjectType, activeServiceType]);
 
   // Placeholder portfolio items
   const portfolioItems = [
-    { id: 1, title: "Elegant Wedding Film", category: "weddings", type: "video" },
-    { id: 2, title: "Corporate Event Coverage", category: "events", type: "video" },
-    { id: 3, title: "Luxury Real Estate", category: "real-estate", type: "photo" },
-    { id: 4, title: "Brand Story: Tech Startup", category: "brand", type: "video" },
-    { id: 5, title: "Love Story Session", category: "love-stories", type: "video" },
-    { id: 6, title: "Model Portfolio Shoot", category: "model", type: "photo" },
-    { id: 7, title: "Wedding Photography", category: "weddings", type: "photo" },
-    { id: 8, title: "Business Conference", category: "events", type: "photo" },
-    { id: 9, title: "Modern Architecture", category: "real-estate", type: "photo" },
-    { id: 10, title: "Product Launch Video", category: "brand", type: "video" },
-    { id: 11, title: "Engagement Session", category: "love-stories", type: "photo" },
-    { id: 12, title: "Fashion Portfolio", category: "model", type: "photo" },
+    { id: 1, title: "Elegant Wedding Film", projectType: "weddings", serviceType: "videography" },
+    { id: 2, title: "Corporate Event Coverage", projectType: "events", serviceType: "videography" },
+    { id: 3, title: "Luxury Real Estate", projectType: "real-estate", serviceType: "photography" },
+    { id: 4, title: "Brand Story: Tech Startup", projectType: "brand", serviceType: "videography" },
+    { id: 5, title: "Love Story Session", projectType: "love-stories", serviceType: "videography" },
+    { id: 6, title: "Model Portfolio Shoot", projectType: "model", serviceType: "photography" },
+    { id: 7, title: "Wedding Photography", projectType: "weddings", serviceType: "photography" },
+    { id: 8, title: "Business Conference", projectType: "events", serviceType: "photography" },
+    { id: 9, title: "Modern Architecture", projectType: "real-estate", serviceType: "photography" },
+    { id: 10, title: "Product Launch Video", projectType: "brand", serviceType: "videography" },
+    { id: 11, title: "Engagement Session", projectType: "love-stories", serviceType: "photography" },
+    { id: 12, title: "Fashion Portfolio", projectType: "model", serviceType: "photography" },
   ];
 
-  const filteredItems = activeCategory === "all" 
-    ? portfolioItems 
-    : portfolioItems.filter(item => item.category === activeCategory);
+  const filteredItems = portfolioItems.filter(item => {
+    const matchesProject = activeProjectType === "all" || item.projectType === activeProjectType;
+    const matchesService = activeServiceType === "all" || item.serviceType === activeServiceType;
+    return matchesProject && matchesService;
+  });
 
-  const categories = [
-    { value: "all" as Category, label: "All Work" },
-    { value: "weddings" as Category, label: "Weddings" },
-    { value: "events" as Category, label: "Events" },
-    { value: "real-estate" as Category, label: "Real Estate" },
-    { value: "brand" as Category, label: "Brand Stories" },
-    { value: "love-stories" as Category, label: "Love Stories" },
-    { value: "model" as Category, label: "Model Portfolio" },
+  const projectTypes = [
+    { value: "all" as ProjectType, label: "All Projects" },
+    { value: "weddings" as ProjectType, label: "Weddings" },
+    { value: "events" as ProjectType, label: "Events" },
+    { value: "real-estate" as ProjectType, label: "Real Estate" },
+    { value: "brand" as ProjectType, label: "Brand Stories" },
+    { value: "love-stories" as ProjectType, label: "Love Stories" },
+    { value: "model" as ProjectType, label: "Model Portfolio" },
   ];
+
+  const serviceTypes = [
+    { value: "all" as ServiceType, label: "All Services" },
+    { value: "videography" as ServiceType, label: "Videography" },
+    { value: "photography" as ServiceType, label: "Photography" },
+  ];
+
+  const currentProjectLabel = projectTypes.find(p => p.value === activeProjectType)?.label || "All Projects";
+  const currentServiceLabel = serviceTypes.find(s => s.value === activeServiceType)?.label || "All Services";
 
   return (
     <div className="min-h-screen bg-background">
@@ -79,14 +94,13 @@ export default function Portfolio() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-16 px-6">
         <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Our Portfolio
           </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            Explore our collection of visual stories. Each project represents our
-            commitment to excellence and creative storytelling.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            Explore our collection of visual stories across weddings, events, and brand narratives
           </p>
         </div>
       </section>
@@ -94,33 +108,115 @@ export default function Portfolio() {
       {/* Filter Section */}
       <section className="pb-12 px-6">
         <div className="container mx-auto max-w-6xl">
-          {/* Desktop: Flex Wrap */}
-          <div className="hidden md:flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
-              <Button
-                key={category.value}
-                variant={activeCategory === category.value ? "default" : "outline"}
-                onClick={() => setActiveCategory(category.value)}
-                className="min-w-[120px]"
-              >
-                {category.label}
-              </Button>
-            ))}
+          {/* Desktop Filters - Horizontal Scroll */}
+          <div className="hidden md:block">
+            <div className="mb-6">
+              <h3 className="text-sm font-semibold text-muted-foreground mb-3">Project Type</h3>
+              <div className="flex flex-wrap gap-2">
+                {projectTypes.map((type) => (
+                  <button
+                    key={type.value}
+                    onClick={() => setActiveProjectType(type.value)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      activeProjectType === type.value
+                        ? "bg-primary text-primary-foreground shadow-md"
+                        : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    }`}
+                  >
+                    {type.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold text-muted-foreground mb-3">Service Type</h3>
+              <div className="flex flex-wrap gap-2">
+                {serviceTypes.map((type) => (
+                  <button
+                    key={type.value}
+                    onClick={() => setActiveServiceType(type.value)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      activeServiceType === type.value
+                        ? "bg-primary text-primary-foreground shadow-md"
+                        : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    }`}
+                  >
+                    {type.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Mobile: Horizontal Scroll */}
-          <div className="md:hidden overflow-x-auto scrollbar-hide -mx-6 px-6">
-            <div className="flex gap-3 pb-4">
-              {categories.map((category) => (
-                <Button
-                  key={category.value}
-                  variant={activeCategory === category.value ? "default" : "outline"}
-                  onClick={() => setActiveCategory(category.value)}
-                  className="min-w-[120px] flex-shrink-0"
-                >
-                  {category.label}
-                </Button>
-              ))}
+          {/* Mobile Filters - Dropdown */}
+          <div className="md:hidden space-y-3">
+            {/* Project Type Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setShowProjectDropdown(!showProjectDropdown);
+                  setShowServiceDropdown(false);
+                }}
+                className="w-full flex items-center justify-between px-4 py-3 bg-secondary rounded-lg text-sm font-medium text-foreground"
+              >
+                <span>{currentProjectLabel}</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${showProjectDropdown ? "rotate-180" : ""}`} />
+              </button>
+              {showProjectDropdown && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-background border border-border rounded-lg shadow-lg z-10 max-h-64 overflow-y-auto">
+                  {projectTypes.map((type) => (
+                    <button
+                      key={type.value}
+                      onClick={() => {
+                        setActiveProjectType(type.value);
+                        setShowProjectDropdown(false);
+                      }}
+                      className={`w-full px-4 py-3 text-left text-sm transition-colors ${
+                        activeProjectType === type.value
+                          ? "bg-primary text-primary-foreground"
+                          : "hover:bg-accent"
+                      }`}
+                    >
+                      {type.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Service Type Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setShowServiceDropdown(!showServiceDropdown);
+                  setShowProjectDropdown(false);
+                }}
+                className="w-full flex items-center justify-between px-4 py-3 bg-secondary rounded-lg text-sm font-medium text-foreground"
+              >
+                <span>{currentServiceLabel}</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${showServiceDropdown ? "rotate-180" : ""}`} />
+              </button>
+              {showServiceDropdown && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-background border border-border rounded-lg shadow-lg z-10">
+                  {serviceTypes.map((type) => (
+                    <button
+                      key={type.value}
+                      onClick={() => {
+                        setActiveServiceType(type.value);
+                        setShowServiceDropdown(false);
+                      }}
+                      className={`w-full px-4 py-3 text-left text-sm transition-colors ${
+                        activeServiceType === type.value
+                          ? "bg-primary text-primary-foreground"
+                          : "hover:bg-accent"
+                      }`}
+                    >
+                      {type.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -129,126 +225,90 @@ export default function Portfolio() {
       {/* Portfolio Grid */}
       <section className="pb-20 px-6">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredItems.map((item) => (
-              <Card
-                key={item.id}
-                className="group cursor-pointer overflow-hidden hover:shadow-2xl transition-all duration-300"
-              >
-                <div className="relative aspect-video bg-muted">
-                  {/* Placeholder for portfolio item */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
-                    {item.type === "video" ? (
-                      <Play className="h-16 w-16 text-primary/40 group-hover:text-primary/60 transition-colors" />
+              <Card key={item.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer">
+                <div className="relative aspect-video bg-secondary/30">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {item.serviceType === "videography" ? (
+                      <Play className="h-16 w-16 text-primary opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
                     ) : (
-                      <ImageIcon className="h-16 w-16 text-primary/40 group-hover:text-primary/60 transition-colors" />
+                      <ImageIcon className="h-16 w-16 text-primary opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
                     )}
                   </div>
-                  
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <p className="text-sm font-medium mb-2">
-                        {item.type === "video" ? "Watch Video" : "View Photos"}
-                      </p>
-                      {item.type === "video" ? (
-                        <Play className="h-10 w-10 mx-auto" />
-                      ) : (
-                        <ImageIcon className="h-10 w-10 mx-auto" />
-                      )}
-                    </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                    <h3 className="text-white font-semibold">{item.title}</h3>
+                    <p className="text-white/80 text-sm capitalize">{item.serviceType}</p>
                   </div>
-
-                  {/* Type badge */}
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-background/90 backdrop-blur-sm rounded-full text-xs font-medium">
-                    {item.type === "video" ? "Video" : "Photo"}
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-foreground mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground capitalize">
-                    {item.category.replace("-", " ")}
-                  </p>
                 </div>
               </Card>
             ))}
           </div>
 
-          {/* Empty state */}
           {filteredItems.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-xl text-muted-foreground">
-                No items found in this category.
-              </p>
+              <p className="text-muted-foreground text-lg">No portfolio items match your filters</p>
+              <Button
+                variant="outline"
+                className="mt-4"
+                onClick={() => {
+                  setActiveProjectType("all");
+                  setActiveServiceType("all");
+                }}
+              >
+                Clear Filters
+              </Button>
             </div>
           )}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-6 bg-secondary/30">
-        <div className="container mx-auto text-center max-w-4xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Like What You See?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            Let's create something amazing together. Get in touch to discuss your
-            project.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
-                <Button size="lg" variant="default">
-                  Start Your Project
-                </Button>
-              </Link>
-            <Link href="/services">
-                <Button size="lg" variant="outline">
-                  View Services
-                </Button>
-              </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Note Section */}
-      <section className="py-12 px-6">
-        <div className="container mx-auto max-w-4xl text-center">
-          <p className="text-sm text-muted-foreground">
-            Portfolio items shown are placeholders. Actual work will be added through
-            the content management system once integrated.
-          </p>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-center md:text-left">
-              <p className="text-2xl font-bold text-foreground mb-2">FrameTell</p>
+      <footer className="bg-secondary/30 py-12 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-4">FrameTell</h3>
               <p className="text-sm text-muted-foreground">
                 Professional Video Production & Photography
               </p>
             </div>
-            <div className="flex gap-8">
-              <Link href="/services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Services
-            </Link>
-              <Link href="/portfolio" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Portfolio
-            </Link>
-              <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              About
-            </Link>
-              <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Contact
-            </Link>
+            <div>
+              <h4 className="text-sm font-semibold text-foreground mb-3">Services</h4>
+              <div className="space-y-2">
+                <Link href="/services" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Videography
+                </Link>
+                <Link href="/services" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Photography
+                </Link>
+                <Link href="/services" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Post-Production
+                </Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-foreground mb-3">Company</h4>
+              <div className="space-y-2">
+                <Link href="/portfolio" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Portfolio
+                </Link>
+                <Link href="/about" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  About
+                </Link>
+                <Link href="/contact" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-foreground mb-3">Connect</h4>
+              <p className="text-sm text-muted-foreground">
+                Follow us on social media for latest work and updates.
+              </p>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-border text-center">
+          <div className="border-t border-border pt-8 text-center">
             <p className="text-sm text-muted-foreground">
               © 2025 FrameTell. All rights reserved.
             </p>
