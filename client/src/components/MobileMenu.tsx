@@ -15,16 +15,31 @@ export function MobileMenu() {
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
+      document.body.style.height = '100%';
+      document.body.style.top = '0';
+      document.body.style.left = '0';
+      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.style.height = '100%';
     } else {
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
+      document.body.style.height = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
     }
 
     return () => {
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
+      document.body.style.height = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
     };
   }, [isOpen]);
 
@@ -41,11 +56,11 @@ export function MobileMenu() {
 
       {/* Mobile Menu Full Screen Overlay */}
       <div
-        className={`fixed inset-0 bg-background z-[9999] md:hidden transition-all duration-300 ${
+        className={`fixed inset-0 bg-background z-[9999] md:hidden transition-all duration-300 min-h-screen h-screen overflow-hidden ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full min-h-screen">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border">
             <span className="text-xl font-bold text-foreground">Menu</span>
