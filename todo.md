@@ -109,3 +109,10 @@
 - [x] Increase z-index for mobile menu backdrop to appear above all content
 - [x] Increase z-index for mobile menu panel to appear above backdrop
 - [x] Test mobile menu on all pages to ensure it displays correctly
+
+## Mobile Menu Full-Width Fix
+- [x] Change mobile menu from w-64 (256px) to full-width
+- [x] Prevent horizontal scrolling when menu is open
+- [x] Add body scroll lock when menu is open
+- [x] Test on mobile device
+- [ ] Push to GitHub development branch
