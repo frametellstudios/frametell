@@ -86,3 +86,7 @@
 
 ## Bug Fixes - JSX Errors
 - [x] Fix non-boolean attribute error in Portfolio.tsx style jsx tag
+
+## Bug Fixes - UI Issues
+- [x] Fix mobile menu content not displaying properly
+- [x] Make service cards equal height on desktop
