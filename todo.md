@@ -58,3 +58,6 @@
 - [x] Configure event tracking for conversions (contact form, portfolio views)
 - [ ] Add Umami website ID to index.html after account creation
 - [x] Create social media tracking guide with UTM templates
+
+## Umami Analytics Configuration
+- [x] Update index.html with actual Umami Website ID
