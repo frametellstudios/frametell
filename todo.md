@@ -126,4 +126,13 @@
 - [x] Fix mobile menu to cover FULL HEIGHT of screen (currently only top 5%)
 - [x] Ensure menu fills entire viewport from top to bottom
 - [x] Test on actual mobile device
-- [ ] Push fix to GitHub
+- [x] Push fix to GitHub
+
+## Decap CMS Setup
+- [x] Install Decap CMS package
+- [x] Create admin interface files (index.html, config.yml)
+- [x] Configure CMS collections (portfolio, services, pages)
+- [x] Add Netlify Identity widget to site
+- [x] Create CMS setup guide for Netlify dashboard
+- [ ] Test CMS admin interface
+- [ ] Push to GitHub and deploy
