@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: frametellstudios/frametell
   branch: master
+  base_url: https://yoursite.pages.dev
+  auth_endpoint: /api/auth/authorize
 
 media_folder: "client/public/uploads"
 public_folder: "/uploads"

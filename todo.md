@@ -160,4 +160,13 @@
 - [ ] User enables Netlify Identity
 - [ ] User enables Git Gateway
 - [ ] Test GitHub OAuth login in CMS
+- [x] Push to GitHub (development and master)
+
+## Cloudflare Pages GitHub OAuth (No Netlify)
+- [x] Create Cloudflare Pages Functions directory structure
+- [x] Create OAuth callback endpoint function
+- [x] Create OAuth authorization endpoint function
+- [x] Update CMS config to use GitHub backend with custom OAuth URL
+- [x] Create GitHub OAuth App setup guide
+- [ ] Test OAuth flow
 - [ ] Push to GitHub
