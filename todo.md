@@ -134,5 +134,14 @@
 - [x] Configure CMS collections (portfolio, services, pages)
 - [x] Add Netlify Identity widget to site
 - [x] Create CMS setup guide for Netlify dashboard
-- [ ] Test CMS admin interface
-- [ ] Push to GitHub and deploy
+- [x] Test CMS admin interface
+- [x] Push to GitHub and deploy
+
+## Cloudflare Pages + GitHub OAuth CMS Setup
+- [x] Update CMS config to use GitHub OAuth backend
+- [x] Remove Netlify Identity widget dependencies
+- [ ] Create GitHub OAuth application (user will do this)
+- [ ] Configure OAuth credentials (user will do this)
+- [x] Create Cloudflare Pages deployment guide
+- [ ] Test CMS with GitHub OAuth
+- [ ] Push to GitHub
