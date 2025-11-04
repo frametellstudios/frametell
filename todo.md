@@ -149,6 +149,15 @@
 ## Fix CMS Authentication + GitHub Workflow
 - [x] Update CMS config to use test-repo mode (simpler GitHub auth)
 - [x] Create beginner-friendly guide for pushing to GitHub
-- [ ] Push changes to development branch
-- [ ] Push changes to master branch (production)
-- [ ] Test CMS login with GitHub
+- [x] Push changes to development branch
+- [x] Push changes to master branch (production)
+- [x] Test CMS login with GitHub (test-repo mode configured)
+
+## Netlify OAuth for CMS (Proper GitHub Login)
+- [x] Update CMS config to use git-gateway with Netlify OAuth
+- [x] Create step-by-step Netlify OAuth setup guide
+- [ ] User creates Netlify site (just for OAuth, not hosting)
+- [ ] User enables Netlify Identity
+- [ ] User enables Git Gateway
+- [ ] Test GitHub OAuth login in CMS
+- [ ] Push to GitHub

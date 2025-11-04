@@ -1,7 +1,6 @@
 backend:
-  name: test-repo
-
-local_backend: true
+  name: git-gateway
+  branch: master
 
 media_folder: "client/public/uploads"
 public_folder: "/uploads"
