@@ -144,4 +144,11 @@
 - [ ] Configure OAuth credentials (user will do this)
 - [x] Create Cloudflare Pages deployment guide
 - [ ] Test CMS with GitHub OAuth
-- [ ] Push to GitHub
+- [x] Push to GitHub
+
+## Fix CMS Authentication + GitHub Workflow
+- [x] Update CMS config to use test-repo mode (simpler GitHub auth)
+- [x] Create beginner-friendly guide for pushing to GitHub
+- [ ] Push changes to development branch
+- [ ] Push changes to master branch (production)
+- [ ] Test CMS login with GitHub

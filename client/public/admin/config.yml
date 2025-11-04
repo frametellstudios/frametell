@@ -1,7 +1,7 @@
 backend:
-  name: github
-  repo: frametellstudios/frametell
-  branch: master
+  name: test-repo
+
+local_backend: true
 
 media_folder: "client/public/uploads"
 public_folder: "/uploads"
