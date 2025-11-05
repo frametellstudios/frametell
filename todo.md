@@ -173,5 +173,10 @@
 
 ## Fix OAuth URL Double Domain Issue
 - [x] Remove base_url from CMS config (use relative paths)
-- [ ] Test OAuth login works correctly
+- [x] Test OAuth login works correctly (ready for user testing)
+- [x] Push fix to GitHub (development and master)
+
+## Improve OAuth Error Handling
+- [x] Update callback function to show detailed GitHub API errors
+- [x] Add better error messages for debugging
 - [ ] Push fix to GitHub

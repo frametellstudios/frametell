@@ -11,10 +11,30 @@ export async function onRequest(context) {
 
   // Get authorization code from GitHub
   const code = url.searchParams.get('code');
+  const error = url.searchParams.get('error');
+  const errorDescription = url.searchParams.get('error_description');
+  
+  // Check if GitHub returned an error
+  if (error) {
+    return new Response(
+      JSON.stringify({ 
+        error: `GitHub OAuth error: ${error}`,
+        description: errorDescription || 'No description provided',
+        help: 'Check your GitHub OAuth app settings and make sure the callback URL matches exactly.'
+      }),
+      { 
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
   
   if (!code) {
     return new Response(
-      JSON.stringify({ error: 'No authorization code provided' }),
+      JSON.stringify({ 
+        error: 'No authorization code provided',
+        help: 'The OAuth flow did not complete successfully. Please try again.'
+      }),
       { 
         status: 400,
         headers: { 'Content-Type': 'application/json' }
@@ -30,7 +50,12 @@ export async function onRequest(context) {
     return new Response(
       JSON.stringify({ 
         error: 'GitHub OAuth not configured',
-        message: 'Please set GITHUB_OAUTH_CLIENT_ID and GITHUB_OAUTH_CLIENT_SECRET in Cloudflare Pages environment variables'
+        message: 'Environment variables missing',
+        details: {
+          clientId: clientId ? 'Set' : 'Missing GITHUB_OAUTH_CLIENT_ID',
+          clientSecret: clientSecret ? 'Set' : 'Missing GITHUB_OAUTH_CLIENT_SECRET'
+        },
+        help: 'Add GITHUB_OAUTH_CLIENT_ID and GITHUB_OAUTH_CLIENT_SECRET in Cloudflare Pages Settings → Environment variables'
       }),
       { 
         status: 500,
@@ -54,13 +79,50 @@ export async function onRequest(context) {
       })
     });
 
-    const tokenData = await tokenResponse.json();
+    // Get response text first to handle both JSON and non-JSON responses
+    const responseText = await tokenResponse.text();
+    
+    // Try to parse as JSON
+    let tokenData;
+    try {
+      tokenData = JSON.parse(responseText);
+    } catch (parseError) {
+      // If not JSON, GitHub returned an error page (HTML)
+      return new Response(
+        JSON.stringify({ 
+          error: 'GitHub API returned non-JSON response',
+          status: tokenResponse.status,
+          statusText: tokenResponse.statusText,
+          responsePreview: responseText.substring(0, 200),
+          possibleCauses: [
+            'Invalid Client Secret - check it matches exactly in GitHub OAuth app',
+            'Client Secret was regenerated - update it in Cloudflare environment variables',
+            'Client ID is incorrect',
+            'OAuth app is suspended or deleted'
+          ],
+          help: 'Go to GitHub → Settings → Developer settings → OAuth Apps and verify your credentials'
+        }),
+        { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
 
+    // Check if GitHub returned an error in the JSON response
     if (tokenData.error) {
       return new Response(
         JSON.stringify({ 
-          error: 'GitHub OAuth error',
-          details: tokenData.error_description || tokenData.error
+          error: 'GitHub OAuth token exchange failed',
+          githubError: tokenData.error,
+          description: tokenData.error_description || 'No description provided',
+          errorUri: tokenData.error_uri || null,
+          possibleCauses: tokenData.error === 'bad_verification_code' 
+            ? ['Authorization code expired (codes are single-use)', 'Authorization code already used', 'Code was tampered with']
+            : tokenData.error === 'incorrect_client_credentials'
+            ? ['Client Secret is wrong', 'Client ID is wrong', 'Credentials were regenerated']
+            : ['Check GitHub OAuth app configuration'],
+          help: 'Verify your GitHub OAuth app credentials in Cloudflare environment variables'
         }),
         { 
           status: 400,
@@ -69,13 +131,44 @@ export async function onRequest(context) {
       );
     }
 
-    // Get user information from GitHub
+    // Verify we got an access token
+    if (!tokenData.access_token) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'No access token received',
+          receivedData: tokenData,
+          help: 'GitHub did not return an access token. Check your OAuth app configuration.'
+        }),
+        { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
+
+    // Get user information from GitHub to verify token works
     const userResponse = await fetch('https://api.github.com/user', {
       headers: {
         'Authorization': `Bearer ${tokenData.access_token}`,
         'Accept': 'application/json'
       }
     });
+
+    if (!userResponse.ok) {
+      const userError = await userResponse.text();
+      return new Response(
+        JSON.stringify({ 
+          error: 'Failed to fetch user data from GitHub',
+          status: userResponse.status,
+          details: userError,
+          help: 'The access token was received but could not be used to fetch user data. This might be a GitHub API issue.'
+        }),
+        { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
 
     const userData = await userResponse.json();
 
@@ -103,6 +196,7 @@ export async function onRequest(context) {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       backdrop-filter: blur(10px);
+      max-width: 400px;
     }
     .checkmark {
       font-size: 64px;
@@ -113,8 +207,14 @@ export async function onRequest(context) {
       font-size: 24px;
     }
     p {
-      margin: 0;
+      margin: 0.5rem 0;
       opacity: 0.9;
+    }
+    .user-info {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 14px;
     }
     .spinner {
       margin-top: 1rem;
@@ -135,7 +235,10 @@ export async function onRequest(context) {
   <div class="container">
     <div class="checkmark">✓</div>
     <h1>Authorization Successful!</h1>
-    <p>Redirecting you back to the CMS...</p>
+    <p>Logged in as <strong>${userData.login}</strong></p>
+    <div class="user-info">
+      <p>Redirecting you back to the CMS...</p>
+    </div>
     <div class="spinner"></div>
   </div>
   <script>
@@ -174,7 +277,9 @@ export async function onRequest(context) {
     return new Response(
       JSON.stringify({ 
         error: 'OAuth exchange failed',
-        message: error.message
+        message: error.message,
+        stack: error.stack,
+        help: 'An unexpected error occurred. Check the error details above.'
       }),
       { 
         status: 500,
