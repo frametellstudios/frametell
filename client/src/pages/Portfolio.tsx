@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { useState, useEffect } from "react";
 import { trackPortfolioView } from "@/lib/analytics";
 import { MobileMenu } from "@/components/MobileMenu";
+import { usePortfolio } from "@/hooks/usePortfolio";
 
 type ProjectType = "all" | "weddings" | "events" | "real-estate" | "brand" | "love-stories" | "model";
 type ServiceType = "all" | "videography" | "photography";
@@ -22,25 +23,14 @@ export default function Portfolio() {
     }
   }, [activeProjectType, activeServiceType]);
 
-  // Placeholder portfolio items
-  const portfolioItems = [
-    { id: 1, title: "Elegant Wedding Film", projectType: "weddings", serviceType: "videography" },
-    { id: 2, title: "Corporate Event Coverage", projectType: "events", serviceType: "videography" },
-    { id: 3, title: "Luxury Real Estate", projectType: "real-estate", serviceType: "photography" },
-    { id: 4, title: "Brand Story: Tech Startup", projectType: "brand", serviceType: "videography" },
-    { id: 5, title: "Love Story Session", projectType: "love-stories", serviceType: "videography" },
-    { id: 6, title: "Model Portfolio Shoot", projectType: "model", serviceType: "photography" },
-    { id: 7, title: "Wedding Photography", projectType: "weddings", serviceType: "photography" },
-    { id: 8, title: "Business Conference", projectType: "events", serviceType: "photography" },
-    { id: 9, title: "Modern Architecture", projectType: "real-estate", serviceType: "photography" },
-    { id: 10, title: "Product Launch Video", projectType: "brand", serviceType: "videography" },
-    { id: 11, title: "Engagement Session", projectType: "love-stories", serviceType: "photography" },
-    { id: 12, title: "Fashion Portfolio", projectType: "model", serviceType: "photography" },
-  ];
+  // Load portfolio items from CMS
+  const { items: portfolioItems, loading: portfolioLoading } = usePortfolio();
 
   const filteredItems = portfolioItems.filter(item => {
-    const matchesProject = activeProjectType === "all" || item.projectType === activeProjectType;
-    const matchesService = activeServiceType === "all" || item.serviceType === activeServiceType;
+    const matchesProject = activeProjectType === "all" || item.category?.includes(activeProjectType);
+    const matchesService = activeServiceType === "all" || 
+      (activeServiceType === "videography" && item.type?.includes("video")) ||
+      (activeServiceType === "photography" && item.type?.includes("photo"));
     return matchesProject && matchesService;
   });
 
@@ -226,23 +216,37 @@ export default function Portfolio() {
       <section className="pb-20 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
-              <Card key={item.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer">
-                <div className="relative aspect-video bg-secondary/30">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    {item.serviceType === "videography" ? (
-                      <Play className="h-16 w-16 text-primary opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+            {portfolioLoading ? (
+              <div className="col-span-full text-center py-20">
+                <p className="text-muted-foreground">Loading portfolio...</p>
+              </div>
+            ) : (
+              filteredItems.map((item) => (
+                <Card key={item.slug} className="group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer">
+                  <div className="relative aspect-video bg-secondary/30">
+                    {item.thumbnail ? (
+                      <img 
+                        src={item.thumbnail} 
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
                     ) : (
-                      <ImageIcon className="h-16 w-16 text-primary opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        {item.type?.includes("video") ? (
+                          <Play className="h-16 w-16 text-primary opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                        ) : (
+                          <ImageIcon className="h-16 w-16 text-primary opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                        )}
+                      </div>
                     )}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                      <h3 className="text-white font-semibold">{item.title}</h3>
+                      <p className="text-white/80 text-sm capitalize">{item.type?.join(', ')}</p>
+                    </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                    <h3 className="text-white font-semibold">{item.title}</h3>
-                    <p className="text-white/80 text-sm capitalize">{item.serviceType}</p>
-                  </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))
+            )}
           </div>
 
           {filteredItems.length === 0 && (
