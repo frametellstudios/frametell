@@ -8,13 +8,7 @@
     { "value": "model", "label": "Model Portfolio" }
   ],
   "types": [
-    {
-      "value": "video",
-      "label": "Video"
-    },
-    {
-      "value": "photo",
-      "label": "Photo"
-    }
+    { "value": "video", "label": "Video" },
+    { "value": "photo", "label": "Photo" }
   ]
 }

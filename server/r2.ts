@@ -1,16 +1,15 @@
 import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
-import { ENV } from "./_core/env";
 
 let r2Client: S3Client | null = null;
 
 function getR2Client() {
-  if (!r2Client && ENV.r2AccountId && ENV.r2AccessKeyId && ENV.r2SecretAccessKey) {
+  if (!r2Client && process.env.R2_ACCOUNT_ID && process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY) {
     r2Client = new S3Client({
       region: "auto",
-      endpoint: `https://${ENV.r2AccountId}.r2.cloudflarestorage.com`,
+      endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
       credentials: {
-        accessKeyId: ENV.r2AccessKeyId,
-        secretAccessKey: ENV.r2SecretAccessKey,
+        accessKeyId: process.env.R2_ACCESS_KEY_ID,
+        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
       },
     });
   }
@@ -66,8 +65,8 @@ export async function listR2Media(): Promise<R2Media[]> {
     return [];
   }
 
-  const bucketName = ENV.r2BucketName || "frametell-assets";
-  const publicDomain = ENV.r2PublicDomain; // e.g., https://assets.frametell.com or https://pub-xxx.r2.dev
+  const bucketName = process.env.R2_BUCKET_NAME || "frametell-assets";
+  const publicDomain = process.env.R2_PUBLIC_DOMAIN; // e.g., https://assets.frametell.com or https://pub-xxx.r2.dev
 
   try {
     const command = new ListObjectsV2Command({
@@ -124,8 +123,8 @@ export async function listR2Videos() {
  * Get public URL for a specific video key
  */
 export function getR2VideoUrl(key: string): string {
-  const bucketName = ENV.r2BucketName || "frametell-assets";
-  const publicDomain = ENV.r2PublicDomain;
+  const bucketName = process.env.R2_BUCKET_NAME || "frametell-assets";
+  const publicDomain = process.env.R2_PUBLIC_DOMAIN;
   
   return publicDomain 
     ? `${publicDomain}/${key}`

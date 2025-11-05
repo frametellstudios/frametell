@@ -18,8 +18,8 @@ const R2MediaControl = window.createClass({
       const response = await fetch('/api/trpc/content.r2Media');
       const data = await response.json();
       
-      // tRPC wraps response in { result: { data: ... } }
-      const allMedia = data.result?.data || [];
+      // tRPC wraps response in { result: { data: { json: [...] } } }
+      const allMedia = data.result?.data?.json || [];
       
       this.setState({ 
         allMedia, 
