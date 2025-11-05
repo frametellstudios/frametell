@@ -210,3 +210,8 @@
 - [ ] Make About page content CMS-editable
 - [ ] Test all CMS features work correctly
 - [ ] Push to GitHub
+
+## Bug Fixes - CMS Content Loading
+- [x] Fix service blocks not displaying (content files need to be in public folder)
+- [x] Fix contact info not loading from CMS (move content files to public directory)
+- [x] Copy content folder to client/public so files are accessible at runtime
