@@ -150,7 +150,8 @@ export async function onRequest(context) {
     const userResponse = await fetch('https://api.github.com/user', {
       headers: {
         'Authorization': `Bearer ${tokenData.access_token}`,
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'User-Agent': 'FrameTell-CMS-OAuth'
       }
     });
 

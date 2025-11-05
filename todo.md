@@ -179,4 +179,9 @@
 ## Improve OAuth Error Handling
 - [x] Update callback function to show detailed GitHub API errors
 - [x] Add better error messages for debugging
+- [x] Push fix to GitHub (development and master)
+
+## Fix GitHub API User-Agent Requirement
+- [x] Add User-Agent header to GitHub API requests
+- [ ] Test OAuth flow completes successfully
 - [ ] Push fix to GitHub
