@@ -19,19 +19,19 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
-      <Route path="/services" component={Services} />
       <Route path="/services/videography" component={Videography} />
       <Route path="/services/photography" component={Photography} />
       <Route path="/services/post-production" component={PostProduction} />
-      <Route path="/portfolio" component={Portfolio} />
-      <Route path="/about" component={About} />
-      <Route path="/contact" component={Contact} />
       <Route path="/services/weddings" component={ServicePage} />
       <Route path="/services/events" component={ServicePage} />
       <Route path="/services/real-estate" component={ServicePage} />
       <Route path="/services/brand" component={ServicePage} />
       <Route path="/services/interviews" component={ServicePage} />
       <Route path="/services/model" component={ServicePage} />
+      <Route path="/services" component={Services} />
+      <Route path="/portfolio" component={Portfolio} />
+      <Route path="/about" component={About} />
+      <Route path="/contact" component={Contact} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

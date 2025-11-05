@@ -238,3 +238,7 @@
 - [x] Fix "Service Not Found" error on service landing pages (data loading issue)
 - [x] Add Interviews to portfolio project types in CMS admin config
 - [ ] Test all service landing pages load correctly
+
+## Bug Fix - Services Page JSON Error
+- [x] Fix "Unexpected token '<'" error on /services page (trying to fetch non-existent JSON)
+- [x] Ensure ServicePage component only loads on individual service routes, not /services
