@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { ArrowLeft, Film, Camera } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+import { useState, useEffect } from "react";
 
 interface ServiceData {
   title: string;
@@ -25,18 +25,41 @@ export default function ServicePage() {
   const [, params] = useRoute("/services/:slug");
   const slug = params?.slug || "";
   
-  const { data: service, isLoading: serviceLoading } = trpc.content.service.useQuery(
-    { slug },
-    { enabled: !!slug }
-  );
-  
-  const { data: allPortfolioItems = [], isLoading: portfolioLoading } = trpc.content.portfolioIndex.useQuery();
+  const [service, setService] = useState<ServiceData | null>(null);
+  const [allPortfolioItems, setAllPortfolioItems] = useState<PortfolioItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        // Load service data
+        const serviceRes = await fetch(`/content/services/${slug}.json`);
+        if (serviceRes.ok) {
+          const serviceData = await serviceRes.json();
+          setService(serviceData);
+        }
+
+        // Load portfolio index
+        const portfolioRes = await fetch('/content/portfolio-index.json');
+        if (portfolioRes.ok) {
+          const portfolioData = await portfolioRes.json();
+          setAllPortfolioItems(portfolioData);
+        }
+      } catch (error) {
+        console.error('Error loading service data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (slug) {
+      loadData();
+    }
+  }, [slug]);
   
   const portfolioItems = allPortfolioItems.filter((item: PortfolioItem) =>
-    item.categories.includes(service?.category || slug)
+    item.categories?.includes(service?.category || slug)
   );
-  
-  const loading = serviceLoading || portfolioLoading;
 
   if (loading) {
     return (

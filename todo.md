@@ -284,3 +284,21 @@
 - [x] Fix widget JSON parsing to read data.result.data.json instead of data.result.data
 - [x] Update both r2-video and r2-media widgets with correct response parsing
 - [ ] Test widgets in CMS after deployment to verify files appear
+
+## R2 Widget Not Loading in CMS
+- [x] Check browser console in deployed CMS for JavaScript errors
+- [x] Verify widget scripts are being loaded (r2-video-widget.js, r2-media-widget.js) - Working!
+- [x] Check if API endpoints are accessible from deployed site - 404 error found!
+- [ ] Create Cloudflare Pages Function to serve backend API routes
+- [ ] Deploy backend as Pages Function instead of static-only build
+- [ ] Test R2 API endpoint works after Pages Function deployment
+
+## CMS Simplification & Bug Fixes
+- [x] Remove R2 widget dependencies from CMS config
+- [x] Change Featured Image to simple string input for image URLs
+- [x] Change Gallery Images to simple list of string inputs for image URLs
+- [x] Change Video URL to simple string input
+- [x] Remove r2-video and r2-media widget scripts from admin/index.html
+- [x] Fix Portfolio pages not displaying items from CMS (added usePortfolio hook)
+- [x] Fix service landing pages showing "Service Not Found" error (replaced tRPC with fetch)
+- [ ] Test portfolio and service pages after deployment
