@@ -247,3 +247,14 @@
 - [x] Replace fetch with tRPC API endpoints for service data
 - [x] Add content router to serve service and portfolio data from server
 - [ ] Test service landing pages load correctly with tRPC
+
+## R2 Integration for Video Management
+- [x] Add R2 environment variables to server env configuration
+- [x] Install AWS SDK for S3-compatible R2 access
+- [x] Create R2 service module for listing and accessing videos
+- [x] Add tRPC endpoint to list videos from R2 bucket
+- [x] Create custom CMS widget for R2 video browser
+- [x] Update portfolio CMS config to use R2 video selector
+- [ ] User: Add R2 credentials as environment variables in Manus Settings
+- [ ] User: Upload videos to R2 bucket
+- [ ] Test R2 video listing and selection in CMS after credentials added
