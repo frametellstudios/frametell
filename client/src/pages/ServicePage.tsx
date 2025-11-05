@@ -33,8 +33,9 @@ export default function ServicePage() {
       try {
         // Load service data
         const serviceRes = await fetch(`/content/services/${slug}.json`);
+        let serviceData = null;
         if (serviceRes.ok) {
-          const serviceData = await serviceRes.json();
+          serviceData = await serviceRes.json();
           setService(serviceData);
         }
 
@@ -42,9 +43,10 @@ export default function ServicePage() {
         const portfolioRes = await fetch('/content/portfolio-index.json');
         if (portfolioRes.ok) {
           const allItems = await portfolioRes.json();
-          // Filter by category
+          // Filter by category - use the loaded serviceData or slug
+          const categoryToFilter = serviceData?.category || slug;
           const filtered = allItems.filter((item: PortfolioItem) =>
-            item.categories.includes(service?.category || slug)
+            item.categories.includes(categoryToFilter)
           );
           setPortfolioItems(filtered);
         }

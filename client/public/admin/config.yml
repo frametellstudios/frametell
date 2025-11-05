@@ -16,7 +16,7 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", multiple: true, options: ["weddings", "events", "real-estate", "brand", "love-stories", "model"] }
+      - { label: "Category", name: "category", widget: "select", multiple: true, options: ["weddings", "events", "real-estate", "brand", "interviews", "model"] }
       - { label: "Type", name: "type", widget: "select", multiple: true, options: ["video", "photo"] }
       - { label: "Featured Image", name: "thumbnail", widget: "image" }
       - { label: "Description", name: "description", widget: "text", required: false }

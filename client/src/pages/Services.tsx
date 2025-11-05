@@ -248,6 +248,26 @@ export default function Services() {
                 </CardContent>
               </Card>
             </Link>
+
+            <Card className="h-full hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <Radio className="h-8 w-8 text-primary mb-4" />
+                <h4 className="font-bold text-foreground mb-2">Live Streaming</h4>
+                <p className="text-sm text-muted-foreground">
+                  Broadcast your events to audiences worldwide
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="h-full hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <Film className="h-8 w-8 text-primary mb-4" />
+                <h4 className="font-bold text-foreground mb-2">Drone Services</h4>
+                <p className="text-sm text-muted-foreground">
+                  Aerial perspectives for unique storytelling
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Mobile Compact Grid (2 columns) */}
@@ -323,6 +343,26 @@ export default function Services() {
                 </CardContent>
               </Card>
             </Link>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Radio className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Live Streaming</h4>
+                <p className="text-xs text-muted-foreground">
+                  Worldwide broadcast
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <Film className="h-6 w-6 text-primary mb-2" />
+                <h4 className="font-bold text-sm text-foreground mb-1">Drone Services</h4>
+                <p className="text-xs text-muted-foreground">
+                  Aerial perspectives
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

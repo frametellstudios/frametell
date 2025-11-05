@@ -232,3 +232,9 @@
 - [ ] Link specialized services from Videography/Photography pages
 - [ ] Test all service landing page links work correctly
 - [ ] Verify portfolio filtering works on each landing page
+
+## Bug Fixes - Service Pages & Portfolio
+- [x] Restore Live Streaming & Drone Services to Services page specialized services section
+- [x] Fix "Service Not Found" error on service landing pages (data loading issue)
+- [x] Add Interviews to portfolio project types in CMS admin config
+- [ ] Test all service landing pages load correctly
