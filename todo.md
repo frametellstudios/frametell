@@ -278,9 +278,9 @@
 - [x] Update Featured Image field to use r2-media widget for R2 image selection
 - [ ] Test image selection from R2 in CMS after deployment
 
-## R2 Connection Debugging
-- [x] Add R2 environment variables to server ENV configuration
-- [x] Update R2 service to use ENV instead of process.env directly
-- [ ] Test R2 API endpoint to verify connection works
-- [ ] Push R2 ENV fix to GitHub for deployment
-- [ ] Verify R2 media loads in CMS after deployment
+## R2 Widget Debugging
+- [x] Verify both r2-video and r2-media widgets are properly registered in CMS
+- [x] Test tRPC content.r2Media endpoint directly to check if it returns data (working!)
+- [x] Fix widget JSON parsing to read data.result.data.json instead of data.result.data
+- [x] Update both r2-video and r2-media widgets with correct response parsing
+- [ ] Test widgets in CMS after deployment to verify files appear

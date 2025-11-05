@@ -16,8 +16,8 @@ const R2VideoControl = window.createClass({
       const response = await fetch('/api/trpc/content.r2Videos');
       const data = await response.json();
       
-      // tRPC wraps response in { result: { data: ... } }
-      const videos = data.result?.data || [];
+      // tRPC wraps response in { result: { data: { json: [...] } } }
+      const videos = data.result?.data?.json || [];
       
       this.setState({ videos, loading: false });
     } catch (error) {
