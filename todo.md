@@ -267,8 +267,13 @@
 - [x] Update R2_SETUP.md with correct API token creation steps
 
 ## R2 Integration Deployment
-- [ ] Test R2 connection with user-provided credentials
-- [ ] Verify R2 media browser loads files from bucket
+- [ ] Test R2 connection with user-provided credentials (requires user to upload files to R2)
+- [ ] Verify R2 media browser loads files from bucket (after files uploaded)
 - [x] Update R2_SETUP.md with clarified Account ID and public URL instructions
-- [ ] Push R2 integration to GitHub master branch
-- [ ] Verify CMS widget works on deployed site
+- [x] Push R2 integration to GitHub master branch
+- [ ] Verify CMS widget works on deployed site (after Cloudflare build completes)
+
+## CMS Widget Configuration Fix
+- [x] Update Gallery Images field to use r2-media widget instead of default image widget
+- [x] Update Featured Image field to use r2-media widget for R2 image selection
+- [ ] Test image selection from R2 in CMS after deployment
