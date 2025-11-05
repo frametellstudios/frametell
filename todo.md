@@ -215,3 +215,8 @@
 - [x] Fix service blocks not displaying (content files need to be in public folder)
 - [x] Fix contact info not loading from CMS (move content files to public directory)
 - [x] Copy content folder to client/public so files are accessible at runtime
+
+## CMS Content Sync Issue
+- [x] Create build script to copy content/ to client/public/content/ during deployment
+- [x] Update package.json build command to run content sync script
+- [ ] Test that CMS changes appear on website after publishing (ready for user testing after deployment)
