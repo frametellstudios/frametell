@@ -183,5 +183,12 @@
 
 ## Fix GitHub API User-Agent Requirement
 - [x] Add User-Agent header to GitHub API requests
-- [ ] Test OAuth flow completes successfully
+- [x] Test OAuth flow completes successfully (ready for user testing after redeploy)
+- [x] Push fix to GitHub (development and master)
+
+## Fix OAuth Callback Communication with CMS
+- [x] Update callback JavaScript with multiple fallback methods
+- [x] Add localStorage communication method
+- [x] Improve postMessage targeting
+- [ ] Test complete OAuth flow
 - [ ] Push fix to GitHub

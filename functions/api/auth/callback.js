@@ -244,22 +244,75 @@ export async function onRequest(context) {
   </div>
   <script>
     (function() {
-      // Send token back to CMS window
+      // Token data to send back to CMS
       const data = {
         token: "${tokenData.access_token}",
         provider: "github"
       };
 
-      // Try to send message to opener window (CMS popup)
-      if (window.opener) {
-        window.opener.postMessage(
-          'authorization:github:success:' + JSON.stringify(data),
-          window.location.origin
-        );
-        setTimeout(() => window.close(), 1000);
+      // Method 1: postMessage to opener (popup flow)
+      function tryPostMessage() {
+        if (window.opener && !window.opener.closed) {
+          // Try multiple message formats that Decap CMS might recognize
+          const messages = [
+            'authorization:github:success:' + JSON.stringify(data),
+            JSON.stringify({ token: data.token, provider: data.provider }),
+            'authorization:github:success:' + JSON.stringify({ token: data.token, provider: data.provider })
+          ];
+          
+          messages.forEach(msg => {
+            try {
+              window.opener.postMessage(msg, '*');
+              window.opener.postMessage(msg, window.location.origin);
+            } catch (e) {
+              console.error('postMessage failed:', e);
+            }
+          });
+          
+          return true;
+        }
+        return false;
+      }
+
+      // Method 2: localStorage (cross-tab communication)
+      function tryLocalStorage() {
+        try {
+          localStorage.setItem('netlify-cms-auth-token', data.token);
+          localStorage.setItem('netlify-cms-auth-provider', data.provider);
+          localStorage.setItem('netlify-cms-auth-timestamp', Date.now().toString());
+          return true;
+        } catch (e) {
+          console.error('localStorage failed:', e);
+          return false;
+        }
+      }
+
+      // Method 3: URL hash redirect
+      function redirectWithHash() {
+        const params = new URLSearchParams();
+        params.set('access_token', data.token);
+        params.set('provider', data.provider);
+        params.set('token_type', 'bearer');
+        window.location.href = '/admin/#' + params.toString();
+      }
+
+      // Execute communication methods
+      const sentViaPostMessage = tryPostMessage();
+      const sentViaLocalStorage = tryLocalStorage();
+
+      if (sentViaPostMessage) {
+        // If we have an opener, try to close after a delay
+        setTimeout(() => {
+          try {
+            window.close();
+          } catch (e) {
+            // If can't close, redirect
+            redirectWithHash();
+          }
+        }, 1500);
       } else {
-        // Fallback: redirect to admin with token in hash
-        window.location.href = "/admin/#access_token=" + data.token + "&provider=github";
+        // No opener, redirect to admin
+        setTimeout(() => redirectWithHash(), 1000);
       }
     })();
   </script>
