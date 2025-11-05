@@ -1,344 +1,197 @@
-/**
- * Cloudflare Pages Function: GitHub OAuth Callback
- * 
- * This endpoint receives the authorization code from GitHub,
- * exchanges it for an access token, and returns it to Decap CMS.
- */
+function renderBody(status, content) {
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>GitHub Authorization</title>
+      <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          margin: 0;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+          background: white;
+          padding: 3rem;
+          border-radius: 12px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+          text-align: center;
+          max-width: 400px;
+        }
+        .success-icon {
+          width: 64px;
+          height: 64px;
+          margin: 0 auto 1.5rem;
+          border-radius: 50%;
+          background: #10b981;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .error-icon {
+          width: 64px;
+          height: 64px;
+          margin: 0 auto 1.5rem;
+          border-radius: 50%;
+          background: #ef4444;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .checkmark {
+          width: 32px;
+          height: 32px;
+          border: 3px solid white;
+          border-top: none;
+          border-left: none;
+          transform: rotate(45deg);
+          margin-top: -8px;
+        }
+        .x-mark {
+          color: white;
+          font-size: 48px;
+          font-weight: bold;
+          line-height: 1;
+        }
+        h1 {
+          margin: 0 0 1rem;
+          color: #1f2937;
+          font-size: 1.5rem;
+        }
+        p {
+          margin: 0;
+          color: #6b7280;
+        }
+        .spinner {
+          width: 40px;
+          height: 40px;
+          margin: 1rem auto;
+          border: 4px solid #f3f4f6;
+          border-top: 4px solid #667eea;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        ${status === 'success' ? `
+          <div class="success-icon">
+            <div class="checkmark"></div>
+          </div>
+          <h1>Authorization Successful!</h1>
+          <p>Logged in as ${content.provider}</p>
+          <div class="spinner"></div>
+          <p>Redirecting you back to the CMS...</p>
+        ` : `
+          <div class="error-icon">
+            <div class="x-mark">×</div>
+          </div>
+          <h1>Authorization Failed</h1>
+          <p>${typeof content === 'string' ? content : JSON.stringify(content)}</p>
+        `}
+      </div>
+      <script>
+        const receiveMessage = (message) => {
+          window.opener.postMessage(
+            'authorization:github:${status}:${JSON.stringify(content)}',
+            message.origin
+          );
+        };
+        window.removeEventListener("message", receiveMessage, false);
+        window.addEventListener("message", receiveMessage, false);
+        window.opener.postMessage("authorizing:github", "*");
+      </script>
+    </body>
+    </html>
+  `;
+  const blob = new Blob([html]);
+  return blob;
+}
 
 export async function onRequest(context) {
-  const { request, env } = context;
+  const {
+    request,
+    env,
+  } = context;
+
+  const client_id = env.GITHUB_OAUTH_CLIENT_ID || env.GITHUB_CLIENT_ID;
+  const client_secret = env.GITHUB_OAUTH_CLIENT_SECRET || env.GITHUB_CLIENT_SECRET;
+
+  if (!client_id || !client_secret) {
+    return new Response(renderBody('error', 'Missing GitHub OAuth credentials'), {
+      status: 200,
+      headers: {
+        'content-type': 'text/html;charset=UTF-8',
+      },
+    });
+  }
+
   const url = new URL(request.url);
-
-  // Get authorization code from GitHub
   const code = url.searchParams.get('code');
-  const error = url.searchParams.get('error');
-  const errorDescription = url.searchParams.get('error_description');
-  
-  // Check if GitHub returned an error
-  if (error) {
-    return new Response(
-      JSON.stringify({ 
-        error: `GitHub OAuth error: ${error}`,
-        description: errorDescription || 'No description provided',
-        help: 'Check your GitHub OAuth app settings and make sure the callback URL matches exactly.'
-      }),
-      { 
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
-  }
-  
+
   if (!code) {
-    return new Response(
-      JSON.stringify({ 
-        error: 'No authorization code provided',
-        help: 'The OAuth flow did not complete successfully. Please try again.'
-      }),
-      { 
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
-  }
-
-  // Get GitHub OAuth credentials from environment variables
-  const clientId = env.GITHUB_OAUTH_CLIENT_ID;
-  const clientSecret = env.GITHUB_OAUTH_CLIENT_SECRET;
-
-  if (!clientId || !clientSecret) {
-    return new Response(
-      JSON.stringify({ 
-        error: 'GitHub OAuth not configured',
-        message: 'Environment variables missing',
-        details: {
-          clientId: clientId ? 'Set' : 'Missing GITHUB_OAUTH_CLIENT_ID',
-          clientSecret: clientSecret ? 'Set' : 'Missing GITHUB_OAUTH_CLIENT_SECRET'
-        },
-        help: 'Add GITHUB_OAUTH_CLIENT_ID and GITHUB_OAUTH_CLIENT_SECRET in Cloudflare Pages Settings → Environment variables'
-      }),
-      { 
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    return new Response(renderBody('error', 'Missing authorization code'), {
+      status: 200,
+      headers: {
+        'content-type': 'text/html;charset=UTF-8',
+      },
+    });
   }
 
   try {
-    // Exchange authorization code for access token
-    const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        client_id: clientId,
-        client_secret: clientSecret,
-        code: code
-      })
-    });
-
-    // Get response text first to handle both JSON and non-JSON responses
-    const responseText = await tokenResponse.text();
-    
-    // Try to parse as JSON
-    let tokenData;
-    try {
-      tokenData = JSON.parse(responseText);
-    } catch (parseError) {
-      // If not JSON, GitHub returned an error page (HTML)
-      return new Response(
-        JSON.stringify({ 
-          error: 'GitHub API returned non-JSON response',
-          status: tokenResponse.status,
-          statusText: tokenResponse.statusText,
-          responsePreview: responseText.substring(0, 200),
-          possibleCauses: [
-            'Invalid Client Secret - check it matches exactly in GitHub OAuth app',
-            'Client Secret was regenerated - update it in Cloudflare environment variables',
-            'Client ID is incorrect',
-            'OAuth app is suspended or deleted'
-          ],
-          help: 'Go to GitHub → Settings → Developer settings → OAuth Apps and verify your credentials'
-        }),
-        { 
-          status: 500,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-    }
-
-    // Check if GitHub returned an error in the JSON response
-    if (tokenData.error) {
-      return new Response(
-        JSON.stringify({ 
-          error: 'GitHub OAuth token exchange failed',
-          githubError: tokenData.error,
-          description: tokenData.error_description || 'No description provided',
-          errorUri: tokenData.error_uri || null,
-          possibleCauses: tokenData.error === 'bad_verification_code' 
-            ? ['Authorization code expired (codes are single-use)', 'Authorization code already used', 'Code was tampered with']
-            : tokenData.error === 'incorrect_client_credentials'
-            ? ['Client Secret is wrong', 'Client ID is wrong', 'Credentials were regenerated']
-            : ['Check GitHub OAuth app configuration'],
-          help: 'Verify your GitHub OAuth app credentials in Cloudflare environment variables'
-        }),
-        { 
-          status: 400,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-    }
-
-    // Verify we got an access token
-    if (!tokenData.access_token) {
-      return new Response(
-        JSON.stringify({ 
-          error: 'No access token received',
-          receivedData: tokenData,
-          help: 'GitHub did not return an access token. Check your OAuth app configuration.'
-        }),
-        { 
-          status: 500,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-    }
-
-    // Get user information from GitHub to verify token works
-    const userResponse = await fetch('https://api.github.com/user', {
-      headers: {
-        'Authorization': `Bearer ${tokenData.access_token}`,
-        'Accept': 'application/json',
-        'User-Agent': 'FrameTell-CMS-OAuth'
-      }
-    });
-
-    if (!userResponse.ok) {
-      const userError = await userResponse.text();
-      return new Response(
-        JSON.stringify({ 
-          error: 'Failed to fetch user data from GitHub',
-          status: userResponse.status,
-          details: userError,
-          help: 'The access token was received but could not be used to fetch user data. This might be a GitHub API issue.'
-        }),
-        { 
-          status: 500,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-    }
-
-    const userData = await userResponse.json();
-
-    // Return success page that sends token back to CMS
-    const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>GitHub Authorization Complete</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    .container {
-      text-align: center;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-      max-width: 400px;
-    }
-    .checkmark {
-      font-size: 64px;
-      margin-bottom: 1rem;
-    }
-    h1 {
-      margin: 0 0 0.5rem 0;
-      font-size: 24px;
-    }
-    p {
-      margin: 0.5rem 0;
-      opacity: 0.9;
-    }
-    .user-info {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255,255,255,0.2);
-      font-size: 14px;
-    }
-    .spinner {
-      margin-top: 1rem;
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s ease-in-out infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="checkmark">✓</div>
-    <h1>Authorization Successful!</h1>
-    <p>Logged in as <strong>${userData.login}</strong></p>
-    <div class="user-info">
-      <p>Redirecting you back to the CMS...</p>
-    </div>
-    <div class="spinner"></div>
-  </div>
-  <script>
-    (function() {
-      // Token data to send back to CMS
-      const data = {
-        token: "${tokenData.access_token}",
-        provider: "github"
-      };
-
-      // Method 1: postMessage to opener (popup flow)
-      function tryPostMessage() {
-        if (window.opener && !window.opener.closed) {
-          // Try multiple message formats that Decap CMS might recognize
-          const messages = [
-            'authorization:github:success:' + JSON.stringify(data),
-            JSON.stringify({ token: data.token, provider: data.provider }),
-            'authorization:github:success:' + JSON.stringify({ token: data.token, provider: data.provider })
-          ];
-          
-          messages.forEach(msg => {
-            try {
-              window.opener.postMessage(msg, '*');
-              window.opener.postMessage(msg, window.location.origin);
-            } catch (e) {
-              console.error('postMessage failed:', e);
-            }
-          });
-          
-          return true;
-        }
-        return false;
-      }
-
-      // Method 2: localStorage (cross-tab communication)
-      function tryLocalStorage() {
-        try {
-          localStorage.setItem('netlify-cms-auth-token', data.token);
-          localStorage.setItem('netlify-cms-auth-provider', data.provider);
-          localStorage.setItem('netlify-cms-auth-timestamp', Date.now().toString());
-          return true;
-        } catch (e) {
-          console.error('localStorage failed:', e);
-          return false;
-        }
-      }
-
-      // Method 3: URL hash redirect
-      function redirectWithHash() {
-        const params = new URLSearchParams();
-        params.set('access_token', data.token);
-        params.set('provider', data.provider);
-        params.set('token_type', 'bearer');
-        window.location.href = '/admin/#' + params.toString();
-      }
-
-      // Execute communication methods
-      const sentViaPostMessage = tryPostMessage();
-      const sentViaLocalStorage = tryLocalStorage();
-
-      if (sentViaPostMessage) {
-        // If we have an opener, try to close after a delay
-        setTimeout(() => {
-          try {
-            window.close();
-          } catch (e) {
-            // If can't close, redirect
-            redirectWithHash();
-          }
-        }, 1500);
-      } else {
-        // No opener, redirect to admin
-        setTimeout(() => redirectWithHash(), 1000);
-      }
-    })();
-  </script>
-</body>
-</html>
-    `;
-
-    return new Response(html, {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8'
-      }
-    });
-
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ 
-        error: 'OAuth exchange failed',
-        message: error.message,
-        stack: error.stack,
-        help: 'An unexpected error occurred. Check the error details above.'
-      }),
-      { 
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
+    const response = await fetch(
+      'https://github.com/login/oauth/access_token',
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'user-agent': 'cloudflare-functions-github-oauth-login',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify({ client_id, client_secret, code }),
       }
     );
+
+    const result = await response.json();
+
+    if (result.error) {
+      return new Response(renderBody('error', result), {
+        status: 200,
+        headers: {
+          'content-type': 'text/html;charset=UTF-8',
+        },
+      });
+    }
+
+    const token = result.access_token;
+    const provider = 'github';
+    const responseBody = renderBody('success', {
+      token,
+      provider,
+    });
+
+    return new Response(responseBody, {
+      status: 200,
+      headers: {
+        'content-type': 'text/html;charset=UTF-8',
+      },
+    });
+  } catch (error) {
+    return new Response(renderBody('error', error.toString()), {
+      status: 200,
+      headers: {
+        'content-type': 'text/html;charset=UTF-8',
+      },
+    });
   }
 }
