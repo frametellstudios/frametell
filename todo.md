@@ -168,5 +168,10 @@
 - [x] Create OAuth authorization endpoint function
 - [x] Update CMS config to use GitHub backend with custom OAuth URL
 - [x] Create GitHub OAuth App setup guide
-- [ ] Test OAuth flow
-- [ ] Push to GitHub
+- [x] Test OAuth flow (ready for user testing after deployment)
+- [x] Push to GitHub (development and master)
+
+## Fix OAuth URL Double Domain Issue
+- [x] Remove base_url from CMS config (use relative paths)
+- [ ] Test OAuth login works correctly
+- [ ] Push fix to GitHub
