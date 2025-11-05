@@ -16,12 +16,12 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", multiple: true, options: ["weddings", "events", "real-estate", "brand", "love-stories", "model"] }
+      - { label: "Category", name: "category", widget: "select", multiple: true, options: ["weddings", "events", "real-estate", "brand", "interviews", "model"] }
       - { label: "Type", name: "type", widget: "select", multiple: true, options: ["video", "photo"] }
       - { label: "Featured Image", name: "thumbnail", widget: "image" }
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "Gallery Images", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" }, required: false }
-      - { label: "Video URL", name: "videoUrl", widget: "string", required: false }
+      - { label: "Video URL", name: "videoUrl", widget: "r2-video", required: false, hint: "Select a video from R2 or enter a custom URL" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
 

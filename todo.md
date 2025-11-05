@@ -220,3 +220,55 @@
 - [x] Create build script to copy content/ to client/public/content/ during deployment
 - [x] Update package.json build command to run content sync script
 - [ ] Test that CMS changes appear on website after publishing (ready for user testing after deployment)
+
+## UI Improvements & Service Landing Pages
+- [x] Fix icon backgrounds on "What We Do" service blocks (make circular/compact)
+- [x] Update Specialized Services: Change "Weddings" to "Weddings & Love Stories"
+- [x] Update Specialized Services: Replace "Love Stories" with "Interviews"
+- [x] Add "Interviews" as a new Project Type in CMS portfolio options
+- [x] Create landing pages for each specialized service (Weddings, Events, Real Estate, Brand Stories, Interviews, Model Portfolio)
+- [x] Add CMS collections for service landing pages with description and portfolio filtering
+- [x] Link specialized service blocks to their landing pages (Services page done)
+- [ ] Link specialized services from Videography/Photography pages
+- [ ] Test all service landing page links work correctly
+- [ ] Verify portfolio filtering works on each landing page
+
+## Bug Fixes - Service Pages & Portfolio
+- [x] Restore Live Streaming & Drone Services to Services page specialized services section
+- [x] Fix "Service Not Found" error on service landing pages (data loading issue)
+- [x] Add Interviews to portfolio project types in CMS admin config
+- [ ] Test all service landing pages load correctly
+
+## Bug Fix - Services Page JSON Error
+- [x] Fix "Unexpected token '<'" error on /services page (trying to fetch non-existent JSON)
+- [x] Ensure ServicePage component only loads on individual service routes, not /services
+
+## Bug Fix - Service Landing Pages JSON Error
+- [x] Replace fetch with tRPC API endpoints for service data
+- [x] Add content router to serve service and portfolio data from server
+- [ ] Test service landing pages load correctly with tRPC
+
+## R2 Integration for Video Management
+- [x] Add R2 environment variables to server env configuration
+- [x] Install AWS SDK for S3-compatible R2 access
+- [x] Create R2 service module for listing and accessing videos
+- [x] Add tRPC endpoint to list videos from R2 bucket
+- [x] Create custom CMS widget for R2 video browser
+- [x] Update portfolio CMS config to use R2 video selector
+- [ ] User: Add R2 credentials as environment variables in Manus Settings
+- [ ] User: Upload videos to R2 bucket
+- [ ] Test R2 video listing and selection in CMS after credentials added
+
+## R2 Universal Media Browser Enhancement
+- [x] Update R2 service to support all media types (photos, videos, icons, documents)
+- [x] Update tRPC endpoint to return all media files with type categorization
+- [x] Enhance R2 widget with file type filters (All, Videos, Photos, Icons, Documents)
+- [x] Add thumbnail previews for images in the browser
+- [x] Update R2_SETUP.md with correct API token creation steps
+
+## R2 Integration Deployment
+- [ ] Test R2 connection with user-provided credentials
+- [ ] Verify R2 media browser loads files from bucket
+- [x] Update R2_SETUP.md with clarified Account ID and public URL instructions
+- [ ] Push R2 integration to GitHub master branch
+- [ ] Verify CMS widget works on deployed site

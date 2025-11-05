@@ -1,10 +1,10 @@
 {
   "categories": [
-    { "value": "weddings", "label": "Weddings" },
+    { "value": "weddings", "label": "Weddings & Love Stories" },
     { "value": "events", "label": "Events" },
     { "value": "real-estate", "label": "Real Estate" },
     { "value": "brand", "label": "Brand Stories" },
-    { "value": "love-stories", "label": "Love Stories" },
+    { "value": "interviews", "label": "Interviews" },
     { "value": "model", "label": "Model Portfolio" }
   ],
   "types": [

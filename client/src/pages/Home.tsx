@@ -118,7 +118,7 @@ export default function Home() {
                 <Link key={index} href={service.link} className="block group">
                   <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary flex flex-col">
                     <CardContent className="p-8 flex flex-col flex-1">
-                      <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
+                      <div className="mb-6 inline-flex p-3 bg-primary/10 rounded-full w-fit">
                         <IconComponent className="h-8 w-8 text-primary" />
                       </div>
                       <h3 className="text-2xl font-bold text-foreground mb-4">
@@ -148,7 +148,7 @@ export default function Home() {
                   <Link key={index} href={service.link} className="block group flex-shrink-0 w-[85vw]">
                     <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
                       <CardContent className="p-8">
-                        <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
+                        <div className="mb-6 inline-flex p-3 bg-primary/10 rounded-full w-fit">
                           <IconComponent className="h-8 w-8 text-primary" />
                         </div>
                         <h3 className="text-2xl font-bold text-foreground mb-4">
