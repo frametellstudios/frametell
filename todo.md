@@ -265,3 +265,10 @@
 - [x] Enhance R2 widget with file type filters (All, Videos, Photos, Icons, Documents)
 - [x] Add thumbnail previews for images in the browser
 - [x] Update R2_SETUP.md with correct API token creation steps
+
+## R2 Integration Deployment
+- [ ] Test R2 connection with user-provided credentials
+- [ ] Verify R2 media browser loads files from bucket
+- [x] Update R2_SETUP.md with clarified Account ID and public URL instructions
+- [ ] Push R2 integration to GitHub master branch
+- [ ] Verify CMS widget works on deployed site

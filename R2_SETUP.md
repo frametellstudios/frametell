@@ -17,26 +17,37 @@ This guide will help you configure Cloudflare R2 integration for video managemen
 7. **IMPORTANT**: Copy and save these values (you won't see them again):
    - **Access Key ID** (looks like: `abc123def456...`)
    - **Secret Access Key** (looks like: `xyz789secretkey...`)
-8. **Find your Account ID**:
-   - Look at the **Endpoint URL** shown after creating the token
-   - It will be like: `https://[ACCOUNT_ID].r2.cloudflarestorage.com`
-   - Or find it in your R2 overview page URL
+8. **Find your Account ID** (easiest method):
+   - Look at your **browser's address bar** while viewing R2
+   - The URL will be like: `https://dash.cloudflare.com/[ACCOUNT_ID]/r2/overview`
+   - The long alphanumeric string between `cloudflare.com/` and `/r2/` is your Account ID
+   - Example: If URL is `https://dash.cloudflare.com/abc123def456/r2/overview`, then Account ID is `abc123def456`
 
 ## Step 2: Configure R2 Public Access
 
-For videos to be accessible publicly, you need to set up a custom domain or use R2.dev:
+For media files to be accessible publicly, you need to enable public access:
 
 ### Option A: Use R2.dev Domain (Quick Setup)
-1. In your bucket settings, enable **Public Access**
-2. Your bucket will be available at: `https://frametell-assets.r2.dev`
-3. Use this URL as your `R2_PUBLIC_DOMAIN`
+1. Go to your bucket: **frametell-assets**
+2. Click **Settings**
+3. Under **Public Access**, click **Allow Access**
+4. Enable **Public R2.dev Subdomain**
+5. You'll get a URL like: `https://pub-xxxxxxxxxx.r2.dev`
+6. **Important**: This URL will show 404 when accessed directly (that's normal!)
+7. Files will be accessible at: `https://pub-xxxxxxxxxx.r2.dev/filename.mp4`
+8. Use `https://pub-xxxxxxxxxx.r2.dev` as your `R2_PUBLIC_DOMAIN` (without trailing slash)
 
 ### Option B: Custom Domain (Recommended for Production)
 1. Go to your bucket settings
-2. Click **Connect Domain**
-3. Enter your custom domain (e.g., `assets.frametell.com`)
-4. Follow the DNS setup instructions
-5. Use your custom domain as `R2_PUBLIC_DOMAIN`
+2. Click **Settings** → **Custom Domains**
+3. Click **Connect Domain**
+4. Enter your custom domain (e.g., `assets.frametell.com`)
+5. Add the CNAME record to your DNS:
+   - Type: `CNAME`
+   - Name: `assets` (or your subdomain)
+   - Target: Your R2 bucket endpoint
+6. Wait for DNS propagation (can take up to 24 hours)
+7. Use `https://assets.frametell.com` as your `R2_PUBLIC_DOMAIN`
 
 ## Step 3: Add Environment Variables to Manus
 
