@@ -1,0 +1,47 @@
+{
+  "hero_title": "Stories Worth Telling",
+  "hero_subtitle": "Professional videography, photography, and post-production services that capture your moments and elevate your brand.",
+  "showreel_url": "",
+  "cta1_text": "View Our Work",
+  "cta1_link": "/portfolio",
+  "cta2_text": "Start Your Project",
+  "cta2_link": "/contact",
+  "services": [
+    {
+      "title": "Videography",
+      "description": "Cinematic storytelling through motion. Capture weddings, events, and brand narratives with professional video production.",
+      "icon": "film",
+      "link": "/services/videography",
+      "bullets": [
+        "Weddings & Love Stories",
+        "Business Events",
+        "Live Event Coverage",
+        "Brand Stories"
+      ]
+    },
+    {
+      "title": "Photography",
+      "description": "Freeze moments in time. Professional photography for events, real estate, and creative portfolios.",
+      "icon": "camera",
+      "link": "/services/photography",
+      "bullets": [
+        "Reportage Photography",
+        "Real Estate",
+        "Event Coverage",
+        "Model Portfolios"
+      ]
+    },
+    {
+      "title": "Post-Production",
+      "description": "Transform raw footage into polished content with expert editing, color grading, and finishing.",
+      "icon": "scissors",
+      "link": "/services/post-production",
+      "bullets": [
+        "Video Editing",
+        "Color Grading",
+        "Audio Mixing",
+        "Motion Graphics"
+      ]
+    }
+  ]
+}
