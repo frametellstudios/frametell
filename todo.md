@@ -277,3 +277,10 @@
 - [x] Update Gallery Images field to use r2-media widget instead of default image widget
 - [x] Update Featured Image field to use r2-media widget for R2 image selection
 - [ ] Test image selection from R2 in CMS after deployment
+
+## R2 Connection Debugging
+- [x] Add R2 environment variables to server ENV configuration
+- [x] Update R2 service to use ENV instead of process.env directly
+- [ ] Test R2 API endpoint to verify connection works
+- [ ] Push R2 ENV fix to GitHub for deployment
+- [ ] Verify R2 media loads in CMS after deployment
