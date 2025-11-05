@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Film, Camera, Scissors, Play } from "lucide-react";
 import { MobileMenu } from "@/components/MobileMenu";
+import { useHomepage } from "@/hooks/useHomepage";
 
 export default function Home() {
+  const { homepage, loading } = useHomepage();
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Navigation */}
@@ -45,22 +48,21 @@ export default function Home() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 tracking-tight">
-              Stories Worth Telling
+              {homepage.hero_title}
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Professional videography, photography, and post-production services
-              that capture your moments and elevate your brand.
+              {homepage.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-              <Link href="/portfolio" className="w-full sm:w-auto">
+              <Link href={homepage.cta1_link} className="w-full sm:w-auto">
                 <Button variant="outline" size="lg" className="gap-2 w-full sm:w-[220px]">
                   <Play className="h-5 w-5" />
-                  View Our Work
+                  {homepage.cta1_text}
                 </Button>
               </Link>
-              <Link href="/contact" className="w-full sm:w-auto">
+              <Link href={homepage.cta2_link} className="w-full sm:w-auto">
                 <Button variant="default" size="lg" className="w-full sm:w-[220px]">
-                  Start Your Project
+                  {homepage.cta2_text}
                 </Button>
               </Link>
             </div>
@@ -110,147 +112,61 @@ export default function Home() {
 
           {/* Desktop Grid */}
           <div className="hidden md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Videography */}
-            <Link href="/services/videography" className="block group">
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary flex flex-col">
-                  <CardContent className="p-8 flex flex-col flex-1">
-                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
-                      <Film className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground mb-4">
-                      Videography
-                    </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
-                      Cinematic storytelling through motion. Capture weddings, events, and brand narratives with professional video production.
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Weddings & Love Stories</li>
-                      <li>• Business Events</li>
-                      <li>• Live Event Coverage</li>
-                      <li>• Brand Stories</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-            </Link>
-
-            {/* Photography */}
-            <Link href="/services/photography" className="block group">
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary flex flex-col">
-                  <CardContent className="p-8 flex flex-col flex-1">
-                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
-                      <Camera className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground mb-4">
-                      Photography
-                    </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
-                      Freeze moments in time. Professional photography for events, real estate, and creative portfolios.
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Reportage Photography</li>
-                      <li>• Real Estate</li>
-                      <li>• Event Coverage</li>
-                      <li>• Model Portfolios</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-            </Link>
-
-            {/* Post-Production */}
-            <Link href="/services/post-production" className="block group">
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary flex flex-col">
-                  <CardContent className="p-8 flex flex-col flex-1">
-                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
-                      <Scissors className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground mb-4">
-                      Post-Production
-                    </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
-                      Transform raw footage into polished content with expert editing, color grading, and finishing.
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Video Editing</li>
-                      <li>• Color Grading</li>
-                      <li>• Audio Mixing</li>
-                      <li>• Motion Graphics</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-            </Link>
+            {homepage.services.map((service, index) => {
+              const IconComponent = service.icon === 'film' ? Film : service.icon === 'camera' ? Camera : Scissors;
+              return (
+                <Link key={index} href={service.link} className="block group">
+                  <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary flex flex-col">
+                    <CardContent className="p-8 flex flex-col flex-1">
+                      <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
+                        <IconComponent className="h-8 w-8 text-primary" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-foreground mb-4">
+                        {service.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
+                        {service.description}
+                      </p>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        {service.bullets.map((bullet, i) => (
+                          <li key={i}>• {bullet}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Mobile Horizontal Scroll */}
           <div className="md:hidden overflow-x-auto scrollbar-hide -mx-6 px-6">
             <div className="flex gap-6 pb-4">
-              {/* Videography */}
-              <Link href="/services/videography" className="block group flex-shrink-0 w-[85vw]">
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
-                  <CardContent className="p-8">
-                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
-                      <Film className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground mb-4">
-                      Videography
-                    </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      Cinematic storytelling through motion. Capture weddings, events, and brand narratives with professional video production.
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Weddings & Love Stories</li>
-                      <li>• Business Events</li>
-                      <li>• Live Event Coverage</li>
-                      <li>• Brand Stories</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </Link>
-
-              {/* Photography */}
-              <Link href="/services/photography" className="block group flex-shrink-0 w-[85vw]">
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
-                  <CardContent className="p-8">
-                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
-                      <Camera className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground mb-4">
-                      Photography
-                    </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      Freeze moments in time. Professional photography for events, real estate, and creative portfolios.
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Reportage Photography</li>
-                      <li>• Real Estate</li>
-                      <li>• Event Coverage</li>
-                      <li>• Model Portfolios</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </Link>
-
-              {/* Post-Production */}
-              <Link href="/services/post-production" className="block group flex-shrink-0 w-[85vw]">
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
-                  <CardContent className="p-8">
-                    <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
-                      <Scissors className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground mb-4">
-                      Post-Production
-                    </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      Transform raw footage into polished content with expert editing, color grading, and finishing.
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Video Editing</li>
-                      <li>• Color Grading</li>
-                      <li>• Audio Mixing</li>
-                      <li>• Motion Graphics</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </Link>
+              {homepage.services.map((service, index) => {
+                const IconComponent = service.icon === 'film' ? Film : service.icon === 'camera' ? Camera : Scissors;
+                return (
+                  <Link key={index} href={service.link} className="block group flex-shrink-0 w-[85vw]">
+                    <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
+                      <CardContent className="p-8">
+                        <div className="mb-6 inline-flex p-4 bg-primary/10 rounded-lg">
+                          <IconComponent className="h-8 w-8 text-primary" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-foreground mb-4">
+                          {service.title}
+                        </h3>
+                        <p className="text-muted-foreground mb-6 leading-relaxed">
+                          {service.description}
+                        </p>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          {service.bullets.map((bullet, i) => (
+                            <li key={i}>• {bullet}</li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>

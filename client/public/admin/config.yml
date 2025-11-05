@@ -16,8 +16,8 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["weddings", "events", "real-estate", "brand", "love-stories", "model"] }
-      - { label: "Type", name: "type", widget: "select", options: ["video", "photo"] }
+      - { label: "Category", name: "category", widget: "select", multiple: true, options: ["weddings", "events", "real-estate", "brand", "love-stories", "model"] }
+      - { label: "Type", name: "type", widget: "select", multiple: true, options: ["video", "photo"] }
       - { label: "Featured Image", name: "thumbnail", widget: "image" }
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "Gallery Images", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" }, required: false }
@@ -41,6 +41,25 @@ collections:
   - name: "pages"
     label: "Pages"
     files:
+      - label: "Homepage"
+        name: "homepage"
+        file: "content/pages/homepage.json"
+        fields:
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
+          - { label: "Showreel Video URL", name: "showreel_url", widget: "string", required: false, hint: "Vimeo or YouTube embed URL" }
+          - { label: "CTA Button 1 Text", name: "cta1_text", widget: "string", default: "View Our Work" }
+          - { label: "CTA Button 1 Link", name: "cta1_link", widget: "string", default: "/portfolio" }
+          - { label: "CTA Button 2 Text", name: "cta2_text", widget: "string", default: "Start Your Project" }
+          - { label: "CTA Button 2 Link", name: "cta2_link", widget: "string", default: "/contact" }
+          - { label: "Service Blocks", name: "services", widget: "list", fields: [
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Description", name: "description", widget: "text" },
+              { label: "Icon", name: "icon", widget: "select", options: ["film", "camera", "scissors"] },
+              { label: "Link", name: "link", widget: "string" },
+              { label: "Bullet Points", name: "bullets", widget: "list", field: { label: "Point", name: "point", widget: "string" } }
+            ]}
+
       - label: "About Page"
         name: "about"
         file: "content/pages/about.md"
@@ -73,4 +92,17 @@ collections:
               { label: "Facebook", name: "facebook", widget: "string", required: false },
               { label: "YouTube", name: "youtube", widget: "string", required: false },
               { label: "Vimeo", name: "vimeo", widget: "string", required: false }
+            ]}
+
+      - label: "Portfolio Options"
+        name: "portfolio_options"
+        file: "content/settings/portfolio-options.json"
+        fields:
+          - { label: "Categories", name: "categories", widget: "list", fields: [
+              { label: "Value", name: "value", widget: "string" },
+              { label: "Label", name: "label", widget: "string" }
+            ]}
+          - { label: "Types", name: "types", widget: "list", fields: [
+              { label: "Value", name: "value", widget: "string" },
+              { label: "Label", name: "label", widget: "string" }
             ]}

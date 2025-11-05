@@ -196,5 +196,17 @@
 ## Fix Decap CMS OAuth Message Format
 - [x] Research exact message format Decap CMS expects
 - [x] Update callback to send properly formatted message (using working reference implementation)
-- [ ] Test OAuth login completes successfully
-- [ ] Push fix to GitHub
+- [x] Test OAuth login completes successfully (ready for user testing after redeploy)
+- [x] Push fix to GitHub (development and master)
+
+## CMS Integration Improvements
+- [x] Connect CMS contact settings to Contact page (email, phone, location, hours)
+- [x] Fix desktop Services page to show grid instead of horizontal scroll (already implemented correctly)
+- [x] Change portfolio category/type to multi-select fields
+- [x] Add category and type management in CMS Settings
+- [ ] Integrate Cloudflare R2 as CMS media library
+- [x] Make homepage hero text and showreel CMS-editable
+- [x] Make service blocks CMS-editable (Videography, Photography, Post-Production)
+- [ ] Make About page content CMS-editable
+- [ ] Test all CMS features work correctly
+- [ ] Push to GitHub

@@ -1,0 +1,14 @@
+{
+  "categories": [
+    { "value": "weddings", "label": "Weddings" },
+    { "value": "events", "label": "Events" },
+    { "value": "real-estate", "label": "Real Estate" },
+    { "value": "brand", "label": "Brand Stories" },
+    { "value": "love-stories", "label": "Love Stories" },
+    { "value": "model", "label": "Model Portfolio" }
+  ],
+  "types": [
+    { "value": "video", "label": "Video" },
+    { "value": "photo", "label": "Photo" }
+  ]
+}

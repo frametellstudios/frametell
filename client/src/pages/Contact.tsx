@@ -7,9 +7,10 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
-import { trackContactFormSubmit, trackPhoneClick, trackEmailClick } from "@/lib/analytics";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
 export default function Contact() {
+  const { contactInfo, loading } = useContactInfo();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,12 +21,6 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Track form submission with service type
-    trackContactFormSubmit({
-      service: formData.service || "general",
-      source: "contact_page",
-    });
     
     // For now, just show a success message
     // In production, this would integrate with a backend or Netlify Forms
@@ -182,11 +177,10 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">Email</h3>
                       <a 
-                        href="mailto:info@frametell.com"
-                        onClick={() => trackEmailClick()}
+                        href={`mailto:${contactInfo.email}`}
                         className="text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
-                        info@frametell.com
+                        {contactInfo.email}
                       </a>
                     </div>
                   </div>
@@ -198,11 +192,10 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">Phone</h3>
                       <a 
-                        href="tel:+15551234567"
-                        onClick={() => trackPhoneClick()}
+                        href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
                         className="text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
-                        +1 (555) 123-4567
+                        {contactInfo.phone}
                       </a>
                     </div>
                   </div>
@@ -216,7 +209,7 @@ export default function Contact() {
                         Location
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        Serving clients worldwide
+                        {contactInfo.location}
                       </p>
                     </div>
                   </div>
@@ -231,7 +224,7 @@ export default function Contact() {
                     requests, please call us directly.
                   </p>
                   <p className="text-sm opacity-90">
-                    Available Monday - Saturday, 9 AM - 6 PM
+                    Available {contactInfo.hours}
                   </p>
                 </CardContent>
               </Card>
