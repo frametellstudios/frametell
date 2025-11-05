@@ -176,169 +176,153 @@ export default function Services() {
           </div>
 
           {/* Desktop Grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Heart className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Weddings</h4>
-                <p className="text-sm text-muted-foreground">
-                  Capture your special day with cinematic elegance
-                </p>
-              </CardContent>
-            </Card>
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Link href="/services/weddings" className="block">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <Heart className="h-8 w-8 text-primary mb-4" />
+                  <h4 className="font-bold text-foreground mb-2">Weddings & Love Stories</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Capture your special day with cinematic elegance
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Users className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Events Coverage</h4>
-                <p className="text-sm text-muted-foreground">
-                  Professional documentation of corporate and social events
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/events" className="block">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <Users className="h-8 w-8 text-primary mb-4" />
+                  <h4 className="font-bold text-foreground mb-2">Events Coverage</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Professional documentation of corporate and social events
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Radio className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Live Streaming</h4>
-                <p className="text-sm text-muted-foreground">
-                  Broadcast your events to audiences worldwide
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/real-estate" className="block">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <Building className="h-8 w-8 text-primary mb-4" />
+                  <h4 className="font-bold text-foreground mb-2">Real Estate</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Showcase properties with stunning visuals
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Heart className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Love Stories</h4>
-                <p className="text-sm text-muted-foreground">
-                  Romantic narratives that celebrate your journey
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/brand" className="block">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <Sparkles className="h-8 w-8 text-primary mb-4" />
+                  <h4 className="font-bold text-foreground mb-2">Brand Stories</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Compelling visual content for your business
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Sparkles className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Brand Stories</h4>
-                <p className="text-sm text-muted-foreground">
-                  Compelling visual content for your business
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/interviews" className="block">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <Radio className="h-8 w-8 text-primary mb-4" />
+                  <h4 className="font-bold text-foreground mb-2">Interviews</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Professional interview filming and testimonials
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Building className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Real Estate</h4>
-                <p className="text-sm text-muted-foreground">
-                  Showcase properties with stunning visuals
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Camera className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Model Portfolio</h4>
-                <p className="text-sm text-muted-foreground">
-                  Professional portfolio photography for models
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <Film className="h-8 w-8 text-primary mb-4" />
-                <h4 className="font-bold text-foreground mb-2">Drone Services</h4>
-                <p className="text-sm text-muted-foreground">
-                  Aerial perspectives for unique storytelling
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/model" className="block">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <Camera className="h-8 w-8 text-primary mb-4" />
+                  <h4 className="font-bold text-foreground mb-2">Model Portfolio</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Professional portfolio photography for models
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
 
           {/* Mobile Compact Grid (2 columns) */}
           <div className="md:hidden grid grid-cols-2 gap-3">
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Heart className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Weddings</h4>
-                <p className="text-xs text-muted-foreground">
-                  Cinematic elegance
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/weddings">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-4">
+                  <Heart className="h-6 w-6 text-primary mb-2" />
+                  <h4 className="font-bold text-sm text-foreground mb-1">Weddings & Love Stories</h4>
+                  <p className="text-xs text-muted-foreground">
+                    Cinematic elegance
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Users className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Events</h4>
-                <p className="text-xs text-muted-foreground">
-                  Corporate & social
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/events">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-4">
+                  <Users className="h-6 w-6 text-primary mb-2" />
+                  <h4 className="font-bold text-sm text-foreground mb-1">Events</h4>
+                  <p className="text-xs text-muted-foreground">
+                    Corporate & social
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Radio className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Live Streaming</h4>
-                <p className="text-xs text-muted-foreground">
-                  Worldwide broadcast
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/real-estate">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-4">
+                  <Building className="h-6 w-6 text-primary mb-2" />
+                  <h4 className="font-bold text-sm text-foreground mb-1">Real Estate</h4>
+                  <p className="text-xs text-muted-foreground">
+                    Property showcase
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Heart className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Love Stories</h4>
-                <p className="text-xs text-muted-foreground">
-                  Romantic narratives
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/brand">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-4">
+                  <Sparkles className="h-6 w-6 text-primary mb-2" />
+                  <h4 className="font-bold text-sm text-foreground mb-1">Brand Stories</h4>
+                  <p className="text-xs text-muted-foreground">
+                    Business content
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Sparkles className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Brand Stories</h4>
-                <p className="text-xs text-muted-foreground">
-                  Business content
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/interviews">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-4">
+                  <Radio className="h-6 w-6 text-primary mb-2" />
+                  <h4 className="font-bold text-sm text-foreground mb-1">Interviews</h4>
+                  <p className="text-xs text-muted-foreground">
+                    Professional filming
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Building className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Real Estate</h4>
-                <p className="text-xs text-muted-foreground">
-                  Property showcase
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Camera className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Model Portfolio</h4>
-                <p className="text-xs text-muted-foreground">
-                  Professional photos
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <Film className="h-6 w-6 text-primary mb-2" />
-                <h4 className="font-bold text-sm text-foreground mb-1">Drone Services</h4>
-                <p className="text-xs text-muted-foreground">
-                  Aerial perspectives
-                </p>
-              </CardContent>
-            </Card>
+            <Link href="/services/model">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-4">
+                  <Camera className="h-6 w-6 text-primary mb-2" />
+                  <h4 className="font-bold text-sm text-foreground mb-1">Model Portfolio</h4>
+                  <p className="text-xs text-muted-foreground">
+                    Professional photos
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
         </div>
       </section>

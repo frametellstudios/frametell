@@ -220,3 +220,15 @@
 - [x] Create build script to copy content/ to client/public/content/ during deployment
 - [x] Update package.json build command to run content sync script
 - [ ] Test that CMS changes appear on website after publishing (ready for user testing after deployment)
+
+## UI Improvements & Service Landing Pages
+- [x] Fix icon backgrounds on "What We Do" service blocks (make circular/compact)
+- [x] Update Specialized Services: Change "Weddings" to "Weddings & Love Stories"
+- [x] Update Specialized Services: Replace "Love Stories" with "Interviews"
+- [x] Add "Interviews" as a new Project Type in CMS portfolio options
+- [x] Create landing pages for each specialized service (Weddings, Events, Real Estate, Brand Stories, Interviews, Model Portfolio)
+- [x] Add CMS collections for service landing pages with description and portfolio filtering
+- [x] Link specialized service blocks to their landing pages (Services page done)
+- [ ] Link specialized services from Videography/Photography pages
+- [ ] Test all service landing page links work correctly
+- [ ] Verify portfolio filtering works on each landing page

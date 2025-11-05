@@ -12,6 +12,7 @@ import PostProduction from "./pages/PostProduction";
 import Portfolio from "./pages/Portfolio";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import ServicePage from "./pages/ServicePage";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -25,6 +26,12 @@ function Router() {
       <Route path="/portfolio" component={Portfolio} />
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
+      <Route path="/services/weddings" component={ServicePage} />
+      <Route path="/services/events" component={ServicePage} />
+      <Route path="/services/real-estate" component={ServicePage} />
+      <Route path="/services/brand" component={ServicePage} />
+      <Route path="/services/interviews" component={ServicePage} />
+      <Route path="/services/model" component={ServicePage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
