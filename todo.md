@@ -258,3 +258,10 @@
 - [ ] User: Add R2 credentials as environment variables in Manus Settings
 - [ ] User: Upload videos to R2 bucket
 - [ ] Test R2 video listing and selection in CMS after credentials added
+
+## R2 Universal Media Browser Enhancement
+- [x] Update R2 service to support all media types (photos, videos, icons, documents)
+- [x] Update tRPC endpoint to return all media files with type categorization
+- [x] Enhance R2 widget with file type filters (All, Videos, Photos, Icons, Documents)
+- [x] Add thumbnail previews for images in the browser
+- [x] Update R2_SETUP.md with correct API token creation steps

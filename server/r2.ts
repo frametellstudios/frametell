@@ -16,18 +16,49 @@ function getR2Client() {
   return r2Client;
 }
 
-export interface R2Video {
+export interface R2Media {
   key: string;
   url: string;
   size: number;
   lastModified: Date;
+  type: 'video' | 'image' | 'icon' | 'document' | 'other';
+  extension: string;
 }
 
 /**
- * List all videos from R2 bucket
- * Returns array of video objects with public URLs
+ * Get media type from file extension
  */
-export async function listR2Videos(): Promise<R2Video[]> {
+function getMediaType(filename: string): { type: R2Media['type']; extension: string } {
+  const ext = filename.split('.').pop()?.toLowerCase() || '';
+  
+  // Video formats
+  if (['mp4', 'webm', 'mov', 'avi', 'mkv', 'm4v', 'flv', 'wmv'].includes(ext)) {
+    return { type: 'video', extension: ext };
+  }
+  
+  // Image formats
+  if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'tiff', 'heic'].includes(ext)) {
+    return { type: 'image', extension: ext };
+  }
+  
+  // Icon/Vector formats
+  if (['svg', 'ico'].includes(ext)) {
+    return { type: 'icon', extension: ext };
+  }
+  
+  // Document formats
+  if (['pdf', 'doc', 'docx', 'txt', 'md'].includes(ext)) {
+    return { type: 'document', extension: ext };
+  }
+  
+  return { type: 'other', extension: ext };
+}
+
+/**
+ * List all media files from R2 bucket
+ * Returns array of media objects with public URLs and type categorization
+ */
+export async function listR2Media(): Promise<R2Media[]> {
   const client = getR2Client();
   if (!client) {
     console.warn("[R2] Client not configured. Set R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY environment variables.");
@@ -45,35 +76,47 @@ export async function listR2Videos(): Promise<R2Video[]> {
     });
 
     const response = await client.send(command);
-    const videos: R2Video[] = [];
+    const mediaFiles: R2Media[] = [];
 
     if (response.Contents) {
       for (const item of response.Contents) {
         if (!item.Key) continue;
         
-        // Filter for video file extensions
-        const isVideo = /\.(mp4|webm|mov|avi|mkv|m4v)$/i.test(item.Key);
-        if (!isVideo) continue;
+        // Get media type and extension
+        const { type, extension } = getMediaType(item.Key);
+        
+        // Skip unsupported file types if needed
+        // (currently including all types)
 
         // Construct public URL
         const url = publicDomain 
           ? `${publicDomain}/${item.Key}`
           : `https://${bucketName}.r2.dev/${item.Key}`; // Fallback to R2.dev domain
 
-        videos.push({
+        mediaFiles.push({
           key: item.Key,
           url,
           size: item.Size || 0,
           lastModified: item.LastModified || new Date(),
+          type,
+          extension,
         });
       }
     }
 
-    return videos.sort((a, b) => b.lastModified.getTime() - a.lastModified.getTime());
+    return mediaFiles.sort((a, b) => b.lastModified.getTime() - a.lastModified.getTime());
   } catch (error) {
-    console.error("[R2] Error listing videos:", error);
+    console.error("[R2] Error listing media:", error);
     return [];
   }
+}
+
+/**
+ * Legacy function for backwards compatibility
+ */
+export async function listR2Videos() {
+  const allMedia = await listR2Media();
+  return allMedia.filter(m => m.type === 'video');
 }
 
 /**
