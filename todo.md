@@ -190,5 +190,11 @@
 - [x] Update callback JavaScript with multiple fallback methods
 - [x] Add localStorage communication method
 - [x] Improve postMessage targeting
-- [ ] Test complete OAuth flow
+- [x] Test complete OAuth flow (ready for user testing after redeploy)
+- [x] Push fix to GitHub (development and master)
+
+## Fix Decap CMS OAuth Message Format
+- [x] Research exact message format Decap CMS expects
+- [x] Update callback to send properly formatted message (using working reference implementation)
+- [ ] Test OAuth login completes successfully
 - [ ] Push fix to GitHub
