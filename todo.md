@@ -242,3 +242,8 @@
 ## Bug Fix - Services Page JSON Error
 - [x] Fix "Unexpected token '<'" error on /services page (trying to fetch non-existent JSON)
 - [x] Ensure ServicePage component only loads on individual service routes, not /services
+
+## Bug Fix - Service Landing Pages JSON Error
+- [x] Replace fetch with tRPC API endpoints for service data
+- [x] Add content router to serve service and portfolio data from server
+- [ ] Test service landing pages load correctly with tRPC

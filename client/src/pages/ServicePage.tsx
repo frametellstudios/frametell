@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+
 import { useRoute } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { ArrowLeft, Film, Camera } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 interface ServiceData {
   title: string;
@@ -24,41 +25,18 @@ export default function ServicePage() {
   const [, params] = useRoute("/services/:slug");
   const slug = params?.slug || "";
   
-  const [service, setService] = useState<ServiceData | null>(null);
-  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        // Load service data
-        const serviceRes = await fetch(`/content/services/${slug}.json`);
-        let serviceData = null;
-        if (serviceRes.ok) {
-          serviceData = await serviceRes.json();
-          setService(serviceData);
-        }
-
-        // Load all portfolio items
-        const portfolioRes = await fetch('/content/portfolio-index.json');
-        if (portfolioRes.ok) {
-          const allItems = await portfolioRes.json();
-          // Filter by category - use the loaded serviceData or slug
-          const categoryToFilter = serviceData?.category || slug;
-          const filtered = allItems.filter((item: PortfolioItem) =>
-            item.categories.includes(categoryToFilter)
-          );
-          setPortfolioItems(filtered);
-        }
-      } catch (error) {
-        console.error('Error loading service page:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadData();
-  }, [slug]);
+  const { data: service, isLoading: serviceLoading } = trpc.content.service.useQuery(
+    { slug },
+    { enabled: !!slug }
+  );
+  
+  const { data: allPortfolioItems = [], isLoading: portfolioLoading } = trpc.content.portfolioIndex.useQuery();
+  
+  const portfolioItems = allPortfolioItems.filter((item: PortfolioItem) =>
+    item.categories.includes(service?.category || slug)
+  );
+  
+  const loading = serviceLoading || portfolioLoading;
 
   if (loading) {
     return (

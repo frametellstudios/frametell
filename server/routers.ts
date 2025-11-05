@@ -2,6 +2,9 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import { z } from "zod";
+import fs from "fs";
+import path from "path";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -14,6 +17,29 @@ export const appRouter = router({
       return {
         success: true,
       } as const;
+    }),
+  }),
+
+  content: router({
+    service: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        try {
+          const filePath = path.join(process.cwd(), 'content', 'services', `${input.slug}.json`);
+          const data = fs.readFileSync(filePath, 'utf-8');
+          return JSON.parse(data);
+        } catch (error) {
+          return null;
+        }
+      }),
+    portfolioIndex: publicProcedure.query(async () => {
+      try {
+        const filePath = path.join(process.cwd(), 'client', 'public', 'content', 'portfolio-index.json');
+        const data = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(data);
+      } catch (error) {
+        return [];
+      }
     }),
   }),
 
